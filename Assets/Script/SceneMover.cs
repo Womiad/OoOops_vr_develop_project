@@ -11,12 +11,16 @@ public class SceneMover : MonoBehaviour
 
     [Header("場景方塊設定")]
     public GameObject segmentPrefab;
-    public int initialSegments = 5;
-    public float offsetX = 10.4f;  // 每段 X 偏移
-    public float offsetZ = 89.5f;  // 每段 Z 偏移
+    public int initialSegments = 5;  // 玩家前方生成數量
+    public int backSegments = 2;     // 玩家後方生成數量
+    public float offsetX = 10.4f;    // 每段 X 偏移
+    public float offsetZ = 89.5f;    // 每段 Z 偏移
+
+    [Header("起始位置設定")]
+    public Vector3 startPosition = new Vector3(-21.4f, 0f, -54.2f); // ✅ 起始點
 
     private Queue<GameObject> segments = new Queue<GameObject>();
-    private Vector3 nextSpawnPos = Vector3.zero;
+    private Vector3 nextSpawnPos;
     private Vector3 movementDir; // 玩家每幀前進方向
 
     void Start()
@@ -27,7 +31,22 @@ public class SceneMover : MonoBehaviour
         // 計算玩家每幀前進方向（單位向量）
         movementDir = new Vector3(offsetX, 0, offsetZ).normalized;
 
-        // 預生成初始場景
+        // 設定初始位置
+        nextSpawnPos = startPosition;
+
+        // 取得反方向（用來往後生成）
+        Vector3 backwardDir = -movementDir;
+
+        // ✅ 先往後生成幾段（造景用）
+        Vector3 backSpawnPos = startPosition;
+        for (int i = 0; i < backSegments; i++)
+        {
+            backSpawnPos += backwardDir * new Vector3(offsetX, 0, offsetZ).magnitude;
+            GameObject backSeg = Instantiate(segmentPrefab, backSpawnPos, Quaternion.identity);
+            segments.Enqueue(backSeg);
+        }
+
+        // ✅ 再往前生成主要行進方向的場景
         for (int i = 0; i < initialSegments; i++)
         {
             GameObject seg = Instantiate(segmentPrefab, nextSpawnPos, Quaternion.identity);
@@ -58,8 +77,8 @@ public class SceneMover : MonoBehaviour
             segments.Enqueue(newSeg);
             nextSpawnPos += new Vector3(offsetX, 0, offsetZ);
 
-            // 保持記憶體乾淨
-            if (segments.Count > initialSegments)
+            // 保持記憶體乾淨（只清掉最前面的，保留背後造景）
+            while (segments.Count > initialSegments + backSegments)
             {
                 GameObject old = segments.Dequeue();
                 Destroy(old);

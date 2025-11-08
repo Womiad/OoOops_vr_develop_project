@@ -125,12 +125,12 @@ public class BluetoothReceiver : MonoBehaviour
 
     void UpdateSpeed(float deltaWeight)
     {
-        if (deltaWeight > 1.5f)
+        if (Mathf.Abs(deltaWeight) > 0.3f)
         {
             // ✅ 加速：Weight 上升明顯
             speed += deltaWeight * speedIncreaseRate;
         }
-        else if (deltaWeight <= 0.1f)
+        else if (deltaWeight <= 0.01f)
         {
             // ✅ 幾乎沒變 → 超快減速
             speed -= speedFastDecayRate * Time.deltaTime * 60f;
