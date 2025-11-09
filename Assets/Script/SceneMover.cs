@@ -1,10 +1,15 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
+using System.Collections;
 
 public class SceneMover : MonoBehaviour
 {
     [Header("藍牙接收器 (抓 speed 用)")]
     public BluetoothReceiver bluetoothReceiver;
+
+    [Header("GM (看state)")]
+    public Scene1GM scene1GM;
 
     [Header("玩家/攝影機")]
     public Transform player; // 玩家或攝影機
@@ -58,6 +63,7 @@ public class SceneMover : MonoBehaviour
     void Update()
     {
         if (bluetoothReceiver == null || player == null) return;
+        if (scene1GM.getScene1State() != Scene1State.Run) return;
 
         float speed = bluetoothReceiver.speed;
 
@@ -85,4 +91,5 @@ public class SceneMover : MonoBehaviour
             }
         }
     }
+    
 }
