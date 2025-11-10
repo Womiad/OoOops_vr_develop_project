@@ -382,6 +382,23 @@ public class BluetoothReceiver : MonoBehaviour
         }
     }
 
+    void OnDestroy() // just for testing
+    {
+        isRunning = false;
+
+        if (connectThread != null && connectThread.IsAlive)
+            connectThread.Join(1000);
+
+        if (readThread != null && readThread.IsAlive)
+            readThread.Join(1000);
+
+        if (serialPort != null && serialPort.IsOpen)
+        {
+            serialPort.Close();
+            Debug.Log("🔌 已關閉序列埠。");
+        }
+    }
+
     class DataFrame
     {
         public float AX, AY, AZ;

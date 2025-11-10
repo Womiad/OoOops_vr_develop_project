@@ -1,0 +1,54 @@
+# === Unity: 常見大型二進位檔案 (用 LFS 管理 & 可 lock) ===
+# 圖像 / 素材 / 多媒體
+*.psd    filter=lfs diff=lfs merge=lfs -text lockable
+*.png    filter=lfs diff=lfs merge=lfs -text
+*.jpg    filter=lfs diff=lfs merge=lfs -text
+*.jpeg   filter=lfs diff=lfs merge=lfs -text
+*.tga    filter=lfs diff=lfs merge=lfs -text
+*.bmp    filter=lfs diff=lfs merge=lfs -text
+*.hdr    filter=lfs diff=lfs merge=lfs -text
+*.exr    filter=lfs diff=lfs merge=lfs -text
+*.gif    filter=lfs diff=lfs merge=lfs -text
+
+# 3D 模型 / 原檔
+*.fbx    filter=lfs diff=lfs merge=lfs -text lockable
+*.obj    filter=lfs diff=lfs merge=lfs -text
+*.blend  filter=lfs diff=lfs merge=lfs -text lockable
+*.dae    filter=lfs diff=lfs merge=lfs -text
+
+# 音訊 / 影片
+*.wav    filter=lfs diff=lfs merge=lfs -text lockable
+*.mp3    filter=lfs diff=lfs merge=lfs -text
+*.ogg    filter=lfs diff=lfs merge=lfs -text
+*.aiff   filter=lfs diff=lfs merge=lfs -text
+*.flac   filter=lfs diff=lfs merge=lfs -text
+*.mp4    filter=lfs diff=lfs merge=lfs -text lockable
+*.mov    filter=lfs diff=lfs merge=lfs -text
+*.avi    filter=lfs diff=lfs merge=lfs -text
+
+# 建構 / 打包 / 二進位輸出
+*.apk    filter=lfs diff=lfs merge=lfs -text
+*.aab    filter=lfs diff=lfs merge=lfs -text
+*.ipa    filter=lfs diff=lfs merge=lfs -text
+*.exe    filter=lfs diff=lfs merge=lfs -text
+*.dll    filter=lfs diff=lfs merge=lfs -text
+*.so     filter=lfs diff=lfs merge=lfs -text
+*.dylib  filter=lfs diff=lfs merge=lfs -text
+
+# Unity package / zip 檔
+*.unitypackage filter=lfs diff=lfs merge=lfs -text
+*.zip    filter=lfs diff=lfs merge=lfs -text
+*.rar    filter=lfs diff=lfs merge=lfs -text
+*.7z     filter=lfs diff=lfs merge=lfs -text
+
+# 資料庫 / 大型資料檔
+*.db     filter=lfs diff=lfs merge=lfs -text
+*.sqlite filter=lfs diff=lfs merge=lfs -text
+
+# 可視化與引擎專案特定（通常不用 LFS，但列出供參考）
+# *.unity and *.prefab are text YAML in most cases — we usually DON'T put them in LFS
+# to keep diffs/merges possible. Only add if your team uses binary serialization.
+# *.unity   filter=lfs diff=lfs merge=lfs -text
+# *.prefab  filter=lfs diff=lfs merge=lfs -text
+
+# ====== End of file ======

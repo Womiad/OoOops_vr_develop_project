@@ -19,6 +19,7 @@ public class SceneMover : MonoBehaviour
     public int initialSegments = 5;  // 玩家前方生成數量
     public int backSegments = 2;     // 玩家後方生成數量
     public float offsetX = 10.4f;    // 每段 X 偏移
+    public float offsetY = 0f;    // 每段 y 偏移
     public float offsetZ = 89.5f;    // 每段 Z 偏移
 
     [Header("起始位置設定")]
@@ -34,7 +35,7 @@ public class SceneMover : MonoBehaviour
             player = Camera.main.transform;
 
         // 計算玩家每幀前進方向（單位向量）
-        movementDir = new Vector3(offsetX, 0, offsetZ).normalized;
+        movementDir = new Vector3(offsetX, offsetY, offsetZ).normalized;
 
         // 設定初始位置
         nextSpawnPos = startPosition;
@@ -46,7 +47,7 @@ public class SceneMover : MonoBehaviour
         Vector3 backSpawnPos = startPosition;
         for (int i = 0; i < backSegments; i++)
         {
-            backSpawnPos += backwardDir * new Vector3(offsetX, 0, offsetZ).magnitude;
+            backSpawnPos += backwardDir * new Vector3(offsetX, offsetY, offsetZ).magnitude;
             GameObject backSeg = Instantiate(segmentPrefab, backSpawnPos, Quaternion.identity);
             segments.Enqueue(backSeg);
         }
@@ -56,7 +57,7 @@ public class SceneMover : MonoBehaviour
         {
             GameObject seg = Instantiate(segmentPrefab, nextSpawnPos, Quaternion.identity);
             segments.Enqueue(seg);
-            nextSpawnPos += new Vector3(offsetX, 0, offsetZ);
+            nextSpawnPos += new Vector3(offsetX, offsetY, offsetZ);
         }
     }
 
@@ -81,7 +82,7 @@ public class SceneMover : MonoBehaviour
         {
             GameObject newSeg = Instantiate(segmentPrefab, nextSpawnPos, Quaternion.identity);
             segments.Enqueue(newSeg);
-            nextSpawnPos += new Vector3(offsetX, 0, offsetZ);
+            nextSpawnPos += new Vector3(offsetX, offsetY, offsetZ);
 
             // 保持記憶體乾淨（只清掉最前面的，保留背後造景）
             while (segments.Count > initialSegments + backSegments)
