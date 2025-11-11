@@ -10,7 +10,7 @@ public class BluetoothReceiver : MonoBehaviour
     [Header("TextMeshPro 顯示物件")]
     public TMP_Text outputText;
 
-    [Header("藍牙設定")]
+    [Header("藍牙設定(COM6無線，COM5有線)")]
     public string portName = "COM6";
     public int baudRate = 115200;
 
@@ -305,9 +305,9 @@ public class BluetoothReceiver : MonoBehaviour
 
     void UpdateSpeed(float deltaWeight)
     {
-        if (Mathf.Abs(deltaWeight) > 0.3f)
+        if (Mathf.Abs(deltaWeight) > 0.2f)
             speed += deltaWeight * speedIncreaseRate;
-        else if (deltaWeight <= 0.01f)
+        else if (Mathf.Abs(deltaWeight) <= 0.05f)
             speed -= speedFastDecayRate * Time.deltaTime * 60f;
         else
             speed -= speedDecayRate * Time.deltaTime * 60f;

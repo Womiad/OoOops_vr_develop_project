@@ -149,17 +149,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outputText: {fileID: 1390619332}
-  portName: COM6
+  portName: COM5
   baudRate: 115200
   speed: 0
-  speedIncreaseRate: 3
-  speedDecayRate: 0.1
-  speedFastDecayRate: 1
+  speedIncreaseRate: 4
+  speedDecayRate: 0.01
+  speedFastDecayRate: 0.05
   maxSpeed: 25
   minSpeed: 0
   isReceiving: 0
   receiveTimeout: 2
-  scene1GM: {fileID: 1278402999}
+  scene1GM: {fileID: 0}
   receivedCount: 0
   parseErrorCount: 0
   lastRawMessage: 
@@ -19618,7 +19618,7 @@ Transform:
   m_GameObject: {fileID: 1179848558}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.1699996, y: 2.19, z: 0}
+  m_LocalPosition: {x: -4.1699996, y: 3.77, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -35683,15 +35683,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2401369840925804315, guid: ed00ba4dec0d7814687d4b2d4e8386ff, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2401369840925804315, guid: ed00ba4dec0d7814687d4b2d4e8386ff, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2401369840925804315, guid: ed00ba4dec0d7814687d4b2d4e8386ff, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2401369840925804315, guid: ed00ba4dec0d7814687d4b2d4e8386ff, type: 3}
       propertyPath: m_LocalPosition.x
@@ -35732,6 +35732,10 @@ PrefabInstance:
     - target: {fileID: 2401369840925804315, guid: ed00ba4dec0d7814687d4b2d4e8386ff, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2401369840925804315, guid: ed00ba4dec0d7814687d4b2d4e8386ff, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3117183365837833704, guid: ed00ba4dec0d7814687d4b2d4e8386ff, type: 3}
       propertyPath: m_Name
