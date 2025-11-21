@@ -153,13 +153,13 @@ MonoBehaviour:
   baudRate: 115200
   speed: 0
   speedIncreaseRate: 4
-  speedDecayRate: 0.01
-  speedFastDecayRate: 0.05
+  speedDecayRate: 2
+  speedFastDecayRate: 8
   maxSpeed: 25
   minSpeed: 0
   isReceiving: 0
   receiveTimeout: 2
-  scene1GM: {fileID: 0}
+  scene1GM: {fileID: 1278402999}
   receivedCount: 0
   parseErrorCount: 0
   lastRawMessage: 

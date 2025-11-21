@@ -305,9 +305,9 @@ public class BluetoothReceiver : MonoBehaviour
 
     void UpdateSpeed(float deltaWeight)
     {
-        if (Mathf.Abs(deltaWeight) > 0.2f)
-            speed += deltaWeight * speedIncreaseRate;
-        else if (Mathf.Abs(deltaWeight) <= 0.05f)
+        if (Mathf.Abs(deltaWeight) > 1f)
+            speed += Mathf.Abs(deltaWeight) * speedIncreaseRate;
+        else if (Mathf.Abs(deltaWeight) <= 0.8f)
             speed -= speedFastDecayRate * Time.deltaTime * 60f;
         else
             speed -= speedDecayRate * Time.deltaTime * 60f;
@@ -319,26 +319,44 @@ public class BluetoothReceiver : MonoBehaviour
     {
         try
         {
+            line = line.Trim();
+
+            // ---------------------------
+            // 📌 如果格式是：Weight:12345
+            // ---------------------------
+            if (line.StartsWith("Weight:"))
+            {
+                string value = line.Split(':')[1];
+                float weight = float.Parse(value, CultureInfo.InvariantCulture);
+
+                return new DataFrame
+                {
+                    AX = 0,
+                    AY = 0,
+                    AZ = 0,
+                    AngleX = 0,
+                    AngleY = 0,
+                    AngleZ = 0,
+                    Weight = weight
+                };
+            }
+
+            // ---------------------------
+            // 📌 原本的格式（有 AX/AY/AZ + Angle + Weight）
+            // ---------------------------
             if (!line.Contains("|"))
             {
-                Debug.LogWarning($"⚠️ 資料格式錯誤（缺少分隔符號）：{line}");
+                Debug.LogWarning($"⚠️ 資料格式錯誤：{line}");
                 parseErrorCount++;
                 return null;
             }
 
             string[] parts = line.Split('|');
-            if (parts.Length < 3)
-            {
-                Debug.LogWarning($"⚠️ 資料欄位不足：{line}");
-                parseErrorCount++;
-                return null;
-            }
-
             string[] accelParts = parts[0].Trim().Split(' ');
             string[] angleParts = parts[1].Trim().Split(' ');
             string[] weightPart = parts[2].Trim().Split(' ');
 
-            DataFrame data = new DataFrame
+            return new DataFrame
             {
                 AX = float.Parse(accelParts[0].Split(':')[1], CultureInfo.InvariantCulture),
                 AY = float.Parse(accelParts[1].Split(':')[1], CultureInfo.InvariantCulture),
@@ -348,15 +366,15 @@ public class BluetoothReceiver : MonoBehaviour
                 AngleZ = float.Parse(angleParts[2].Split(':')[1], CultureInfo.InvariantCulture),
                 Weight = float.Parse(weightPart[0].Split(':')[1], CultureInfo.InvariantCulture)
             };
-            return data;
         }
-        catch (System.Exception e)
+        catch (Exception e)
         {
-            Debug.LogWarning($"⚠️ 解析資料失敗：{line}\n錯誤：{e.Message}");
+            Debug.LogWarning($"⚠️ 解析資料失敗：{line} 錯誤：{e.Message}");
             parseErrorCount++;
             return null;
         }
     }
+
 
     void Log(string message)
     {
