@@ -135,7 +135,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &37814623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 172671846d36f7049880784c2dc3f177, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outputText: {fileID: 708990584}
+  outputText: 
   portName: COM5
   baudRate: 115200
   speed: 0
@@ -159,7 +159,6 @@ MonoBehaviour:
   minSpeed: 0
   isReceiving: 0
   receiveTimeout: 2
-  scene1GM: {fileID: 1278402999}
   receivedCount: 0
   parseErrorCount: 0
   lastRawMessage: 
@@ -188,7 +187,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 40313720}
-  - component: {fileID: 40313719}
+  - component: {fileID: 40313721}
   m_Layer: 0
   m_Name: SceneMover
   m_TagString: Untagged
@@ -196,28 +195,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &40313719
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 40313718}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6cc9c1dce32a2840855eb227def12e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bluetoothReceiver: {fileID: 37814623}
-  scene1GM: {fileID: 1278402999}
-  player: {fileID: 1179848559}
-  segmentPrefab: {fileID: 541458813}
-  initialSegments: 5
-  backSegments: 2
-  offsetX: -7.13
-  offsetY: 0
-  offsetZ: 138.2
-  startPosition: {x: -16.67, y: -1.68, z: -24.5}
 --- !u!4 &40313720
 Transform:
   m_ObjectHideFlags: 0
@@ -233,6 +210,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &40313721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 40313718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8d0fcc48e27a6a438f80c298704ad50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bluetoothReceiver: {fileID: 0}
+  player: {fileID: 1179848559}
+  segmentPrefab: {fileID: 541458813}
+  initialSegments: 5
+  backSegments: 2
+  offsetX: -7.13
+  offsetY: 0
+  offsetZ: 138.2
+  startPosition: {x: -16.67, y: -1.68, z: -24.5}
 --- !u!1 &51055511
 GameObject:
   m_ObjectHideFlags: 0
@@ -5301,8 +5299,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 11e4102bf18dacf44bcdedc9d2f6053c, type: 3}
-  m_Resource: {fileID: 8300000, guid: 11e4102bf18dacf44bcdedc9d2f6053c, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 8663fde4a035a7949978107f5983d59a, type: 3}
+  m_Resource: {fileID: 8300000, guid: 8663fde4a035a7949978107f5983d59a, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -16173,7 +16171,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &471366594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16187,7 +16185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: Scene1
-  scene1GM: {fileID: 1278402999}
+  scene1GM: {fileID: 0}
 --- !u!4 &471366595
 Transform:
   m_ObjectHideFlags: 0
@@ -16750,7 +16748,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &643942060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22978,7 +22976,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1278402999}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Scene1GM, Assembly-CSharp
         m_MethodName: startButtonClicked
         m_Mode: 1
@@ -23111,7 +23109,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1278402999}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Scene1GM, Assembly-CSharp
         m_MethodName: retryButtonClicked
         m_Mode: 1
@@ -23706,7 +23704,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1278402999}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Scene1GM, Assembly-CSharp
         m_MethodName: retryButtonClicked
         m_Mode: 1
@@ -29418,9 +29416,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1278402997}
-  - component: {fileID: 1278402999}
+  - component: {fileID: 1278402998}
   m_Layer: 0
-  m_Name: Scene1GM
+  m_Name: Scene2GM
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29441,7 +29439,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1278402999
+--- !u!114 &1278402998
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -29450,15 +29448,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1278402996}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cbbfdeca79e9b84797a150faff1ff24, type: 3}
+  m_Script: {fileID: 11500000, guid: bb4b86f85af87f5498c50bcb9d5f1f4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bluetoothReceiver: {fileID: 37814623}
-  menuItem: {fileID: 455620594}
-  searchingItem: {fileID: 2069365194}
-  explainItem: {fileID: 1494822571}
-  runItem: {fileID: 812870840}
-  failed2ConnectItem: {fileID: 1055028260}
+  bluetoothReceiver: {fileID: 0}
+  debugText: {fileID: 708990584}
 --- !u!1 &1289090513
 GameObject:
   m_ObjectHideFlags: 0
@@ -35312,7 +35306,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1278402999}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Scene1GM, Assembly-CSharp
         m_MethodName: startButtonClicked
         m_Mode: 1

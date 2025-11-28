@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using TMPro;
 
 public enum Scene1State
 {
@@ -19,8 +20,10 @@ public class Scene1GM : MonoBehaviour
     public GameObject menuItem;
     public GameObject searchingItem;
     public GameObject explainItem;
-    public GameObject runItem;
+    // public GameObject runItem;
     public GameObject failed2ConnectItem;
+    public GameObject GuildSlime;
+    public TMP_Text debugText;
 
     private bool explainTimerRunning = false;
 
@@ -51,8 +54,14 @@ public class Scene1GM : MonoBehaviour
                 // ✅ 已連線但還沒收到資料，繼續等待
                 Debug.Log("⏳ 已連線，等待接收資料...");
             }
-            // ✅ 如果連線失敗，BluetoothReceiver 會呼叫 setConnectFailed()
+            
+            if (bluetoothReceiver.isBTconnectionFailed())
+            {
+                setConnectFailed();
+            }
         }
+
+        debugText.text = bluetoothReceiver.outputText;
     }
 
     public void startButtonClicked()
@@ -144,7 +153,8 @@ public class Scene1GM : MonoBehaviour
         menuItem.SetActive(scene1State == Scene1State.Menu);
         searchingItem.SetActive(scene1State == Scene1State.SearchingESP32);
         explainItem.SetActive(scene1State == Scene1State.Explain);
-        runItem.SetActive(scene1State == Scene1State.Run);
+        // runItem.SetActive(scene1State == Scene1State.Run);
         failed2ConnectItem.SetActive(scene1State == Scene1State.Failed2Connect);
+        GuildSlime.SetActive(scene1State == Scene1State.Run);
     }
 }

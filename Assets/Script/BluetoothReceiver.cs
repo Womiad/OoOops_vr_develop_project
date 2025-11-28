@@ -7,8 +7,8 @@ using System;
 
 public class BluetoothReceiver : MonoBehaviour
 {
-    [Header("TextMeshPro 顯示物件")]
-    public TMP_Text outputText;
+    [Header("debug string")]
+    public string outputText;
 
     [Header("藍牙設定(COM6無線，COM5有線)")]
     public string portName = "COM6";
@@ -43,8 +43,7 @@ public class BluetoothReceiver : MonoBehaviour
     private bool connectFailedFlag = false;
     private string connectFailedMessage = "";
 
-    [Header("GM")]
-    public Scene1GM scene1GM;
+    private bool connectionFailed = false;
 
     [Header("Debug 資訊")]
     public int receivedCount = 0;
@@ -55,10 +54,28 @@ public class BluetoothReceiver : MonoBehaviour
     private int lastReceivedCount = 0;
     private float rateUpdateTimer = 0f;
 
+    public static BluetoothReceiver Instance;
+
+    void Awake()
+    {
+        // --- Singleton + 保持跨場景 ---
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+    }
+
+
     void Start()
     {
         if (outputText != null)
-            outputText.text = "press start to connect to ESP32\n";
+            outputText = "press start to connect to ESP32\n";
     }
 
     public void Connect()
@@ -99,6 +116,8 @@ public class BluetoothReceiver : MonoBehaviour
                 isConnected = true;
                 isConnecting = false;
             }
+            
+        connectionFailed = false;
 
             Debug.Log($"✅ 已連線到 ESP32 ({portName})！");
         }
@@ -133,8 +152,9 @@ public class BluetoothReceiver : MonoBehaviour
         Log(msg);
         isConnected = false;
         isConnecting = false;
-        if (scene1GM != null)
-            scene1GM.setConnectFailed();
+        connectionFailed = true;
+        // if (scene1GM != null)
+        //     scene1GM.setConnectFailed();
     }
 
     void ReadSerial()
@@ -169,6 +189,11 @@ public class BluetoothReceiver : MonoBehaviour
         }
         
         Debug.Log("🔌 ReadSerial thread ended.");
+    }
+
+    public bool isBTconnectionFailed()
+    {
+        return connectionFailed;
     }
 
     public bool isBTConnected()
@@ -282,7 +307,7 @@ public class BluetoothReceiver : MonoBehaviour
 
                 Debug.Log(displayText);
                 if (outputText != null)
-                    outputText.text = displayText;
+                    outputText = displayText;
 
                 lastData = currentData;
             }
@@ -293,7 +318,7 @@ public class BluetoothReceiver : MonoBehaviour
         {
             if (outputText != null)
             {
-                outputText.text = $"🔗 Connected to {portName}\n" +
+                outputText = $"🔗 Connected to {portName}\n" +
                                   $"⏳ Waiting for data...\n" +
                                   $"📦 Received: {receivedCount}\n" +
                                   $"❌ Parse Errors: {parseErrorCount}\n" +
@@ -380,7 +405,7 @@ public class BluetoothReceiver : MonoBehaviour
     {
         Debug.Log(message);
         if (outputText != null)
-            outputText.text = message;
+            outputText = message;
     }
 
     void OnApplicationQuit()

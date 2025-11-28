@@ -21,5 +21,11 @@ public class TempSceneChanger : MonoBehaviour
         {
             scene1GM.startButtonClicked();
         }
+
+        // 按下 R 時開始
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            changeScene();
+        }
     }
 }
