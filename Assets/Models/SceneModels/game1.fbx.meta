@@ -78,17 +78,17 @@ ModelImporter:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: two-table-tennis-or-ping-pong-rackets-and-
-    second: {fileID: 2800000, guid: 21114fedf2c15cd4bacb6e8c223fe5f4, type: 3}
+    second: {fileID: 2800000, guid: ba8b6404769cf61489a92e1bda48396a, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: "\u6C34\u6CE52"
-    second: {fileID: 2800000, guid: e65663c845e31fe42b79cb15867a8551, type: 3}
+    second: {fileID: 2800000, guid: 249142aa5e11df740871748fd81c95d7, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: "\u9ED1\u8272"
-    second: {fileID: 2800000, guid: f21b573ab5cdc61438bae48f562f8c21, type: 3}
+    second: {fileID: 2800000, guid: 409dc332fd2035c4eb72fa242dd6847f, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
