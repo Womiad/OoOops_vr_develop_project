@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outputText: 
-  portName: COM4
+  portName: COM5
   baudRate: 115200
   speed: 0
   speedIncreaseRate: 4

@@ -4,6 +4,7 @@ using System.Threading;
 using System.Globalization;
 using TMPro;
 using System;
+using System.Collections.Generic;
 
 public class BluetoothReceiver : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class BluetoothReceiver : MonoBehaviour
     public string outputText;
 
     [Header("藍牙設定(COM6無線，COM5有線)")]
+    public string[] availablePorts = new string[] { "COM6", "COM5", "COM4"  }; // 可嘗試的 COM 列表
+    public int currentPortIndex = 0;
     public string portName = "COM6";
     public int baudRate = 115200;
 
@@ -54,6 +57,14 @@ public class BluetoothReceiver : MonoBehaviour
     private int lastReceivedCount = 0;
     private float rateUpdateTimer = 0f;
 
+    [Header("自動重試設定")]
+    public float autoRetryTimeout = 7f; // 7秒超時
+    public bool enableAutoRetry = true;
+    public int maxRetryAttempts = 3; // 每個 COM 最多重試次數
+    private int currentRetryAttempt = 0;
+    private DateTime connectionStartTime;
+    private bool isWaitingForData = false;
+
     public static BluetoothReceiver Instance;
 
     void Awake()
@@ -71,7 +82,6 @@ public class BluetoothReceiver : MonoBehaviour
         }
     }
 
-
     void Start()
     {
         if (outputText != null)
@@ -86,8 +96,20 @@ public class BluetoothReceiver : MonoBehaviour
             return;
         }
 
+        currentPortIndex = 0;
+        currentRetryAttempt = 0;
+        portName = availablePorts[currentPortIndex];
+        
+        StartConnection();
+    }
+
+    void StartConnection()
+    {
         isConnecting = true;
-        Log($"🔍 正在連線到 {portName}...");
+        connectionStartTime = DateTime.Now;
+        isWaitingForData = false;
+        
+        Log($"🔍 正在連線到 {portName}... (嘗試 {currentRetryAttempt + 1}/{maxRetryAttempts})");
 
         connectThread = new Thread(ConnectInBackground);
         connectThread.Start();
@@ -115,11 +137,12 @@ public class BluetoothReceiver : MonoBehaviour
             {
                 isConnected = true;
                 isConnecting = false;
+                isWaitingForData = true; // 開始等待資料
             }
             
-        connectionFailed = false;
+            connectionFailed = false;
 
-            Debug.Log($"✅ 已連線到 ESP32 ({portName})！");
+            Debug.Log($"✅ 已連線到 ESP32 ({portName})！等待資料中...");
         }
         catch (System.UnauthorizedAccessException)
         {
@@ -152,9 +175,43 @@ public class BluetoothReceiver : MonoBehaviour
         Log(msg);
         isConnected = false;
         isConnecting = false;
-        connectionFailed = true;
-        // if (scene1GM != null)
-        //     scene1GM.setConnectFailed();
+        
+        // 觸發重試邏輯
+        if (enableAutoRetry)
+        {
+            TryNextConnection();
+        }
+    }
+
+    void TryNextConnection()
+    {
+        currentRetryAttempt++;
+        
+        // 如果當前 COM 還有重試次數
+        if (currentRetryAttempt < maxRetryAttempts)
+        {
+            Log($"🔄 {autoRetryTimeout} 秒後重試 {portName}...");
+            Invoke(nameof(StartConnection), 1f); // 1秒後重試
+        }
+        else
+        {
+            // 切換到下一個 COM
+            currentPortIndex++;
+            currentRetryAttempt = 0;
+            
+            if (currentPortIndex < availablePorts.Length)
+            {
+                portName = availablePorts[currentPortIndex];
+                Log($"🔄 切換到 {portName}...");
+                Invoke(nameof(StartConnection), 1f);
+            }
+            else
+            {
+                // 所有 COM 都試過了
+                Log("❌ 所有 COM 埠都無法連線，請檢查藍芽配對。");
+                connectionFailed = true;
+            }
+        }
     }
 
     void ReadSerial()
@@ -170,6 +227,7 @@ public class BluetoothReceiver : MonoBehaviour
                     latestMessage = message.Trim();
                     lastRawMessage = latestMessage;
                     receivedCount++;
+                    isWaitingForData = false; // 收到資料了
                 }
 
                 lock (timeLock)
@@ -224,6 +282,20 @@ public class BluetoothReceiver : MonoBehaviour
                     connectFailedFlag = false;
                     connectFailedMessage = "";
                 }
+            }
+        }
+
+        // ✅ 檢查連線超時（7秒內沒收到資料）
+        if (enableAutoRetry && isConnected && isWaitingForData)
+        {
+            double timeSinceConnectionStart = (DateTime.Now - connectionStartTime).TotalSeconds;
+            
+            if (timeSinceConnectionStart > autoRetryTimeout)
+            {
+                Log($"⏱️ {autoRetryTimeout} 秒內未收到資料，斷線並重試...");
+                CloseConnection();
+                TryNextConnection();
+                return;
             }
         }
 
@@ -282,7 +354,7 @@ public class BluetoothReceiver : MonoBehaviour
                     UpdateSpeed(delta.Weight);
 
                     displayText =
-                        $"🔗 Connected | 📦 Received: {receivedCount} | ❌ Errors: {parseErrorCount} | 📊 Rate: {dataRate:F1} Hz\n\n" +
+                        $"🔗 Connected ({portName}) | 📦 Received: {receivedCount} | ❌ Errors: {parseErrorCount} | 📊 Rate: {dataRate:F1} Hz\n\n" +
                         $"AX: {currentData.AX:F2}, AY: {currentData.AY:F2}, AZ: {currentData.AZ:F2}\n" +
                         $"AngleX: {currentData.AngleX:F2} ({delta.AngleX:+0.00;-0.00})\n" +
                         $"AngleY: {currentData.AngleY:F2} ({delta.AngleY:+0.00;-0.00})\n" +
@@ -294,7 +366,7 @@ public class BluetoothReceiver : MonoBehaviour
                 else
                 {
                     displayText =
-                        $"🔗 Connected | 📦 Received: {receivedCount} | ❌ Errors: {parseErrorCount} | 📊 Rate: {dataRate:F1} Hz\n\n" +
+                        $"🔗 Connected ({portName}) | 📦 Received: {receivedCount} | ❌ Errors: {parseErrorCount} | 📊 Rate: {dataRate:F1} Hz\n\n" +
                         $"📦 init data：\n" +
                         $"AX: {currentData.AX:F2}, AY: {currentData.AY:F2}, AZ: {currentData.AZ:F2}\n" +
                         $"AngleX: {currentData.AngleX:F2}\n" +
@@ -318,8 +390,9 @@ public class BluetoothReceiver : MonoBehaviour
         {
             if (outputText != null)
             {
+                double waitTime = (DateTime.Now - connectionStartTime).TotalSeconds;
                 outputText = $"🔗 Connected to {portName}\n" +
-                                  $"⏳ Waiting for data...\n" +
+                                  $"⏳ Waiting for data... ({waitTime:F1}s / {autoRetryTimeout}s)\n" +
                                   $"📦 Received: {receivedCount}\n" +
                                   $"❌ Parse Errors: {parseErrorCount}\n" +
                                   $"📊 Rate: {dataRate:F1} Hz\n" +
@@ -400,6 +473,31 @@ public class BluetoothReceiver : MonoBehaviour
         }
     }
 
+    void CloseConnection()
+    {
+        isRunning = false;
+        isConnected = false;
+        isConnecting = false;
+        isWaitingForData = false;
+
+        if (readThread != null && readThread.IsAlive)
+        {
+            readThread.Join(1000);
+        }
+
+        if (serialPort != null && serialPort.IsOpen)
+        {
+            try
+            {
+                serialPort.Close();
+                Debug.Log("🔌 已關閉序列埠。");
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning($"關閉序列埠時發生錯誤：{e.Message}");
+            }
+        }
+    }
 
     void Log(string message)
     {
@@ -425,7 +523,7 @@ public class BluetoothReceiver : MonoBehaviour
         }
     }
 
-    void OnDestroy() // just for testing
+    void OnDestroy()
     {
         isRunning = false;
 
