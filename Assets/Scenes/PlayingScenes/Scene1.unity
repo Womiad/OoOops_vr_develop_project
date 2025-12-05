@@ -149,6 +149,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outputText: 
+  availablePorts:
+  - COM4
+  - COM5
+  - COM6
+  currentPortIndex: 0
   portName: COM5
   baudRate: 115200
   speed: 0
@@ -163,6 +168,9 @@ MonoBehaviour:
   parseErrorCount: 0
   lastRawMessage: 
   dataRate: 0
+  autoRetryTimeout: 7
+  enableAutoRetry: 1
+  maxRetryAttempts: 3
 --- !u!4 &37814624
 Transform:
   m_ObjectHideFlags: 0

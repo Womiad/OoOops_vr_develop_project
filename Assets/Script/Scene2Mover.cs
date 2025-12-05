@@ -29,6 +29,18 @@ public class Scene2Mover : MonoBehaviour
     private Vector3 nextSpawnPos;
     private Vector3 movementDir; // 玩家每幀前進方向
 
+    [Header("蘑菇生成設定")]
+    public GameObject mushroomPrefab;
+    public float spawnMushroomDistance = 300f; // 跑超過這距離後觸發
+    public float mushroomAheadOffset = 50f;    // 蘑菇生成在玩家前方多少距離
+    private bool mushroomSpawned = false;
+
+    [Header("玩家動畫設定")]
+    public PlayerJump playerJump;
+    private bool mushroomTriggered = false;  // 玩家是否已經觸發動畫
+    private Vector3 mushroomSpawnPos;        // 蘑菇生成位置
+
+
     void Start()
     {
         if (bluetoothReceiver == null)
@@ -94,6 +106,42 @@ public class Scene2Mover : MonoBehaviour
                 Destroy(old);
             }
         }
+
+        // ===============================
+        // 🟦 蘑菇生成邏輯
+        // ===============================
+        if (!mushroomSpawned)
+        {
+            float traveled = Vector3.Distance(player.position, startPosition);
+
+            if (traveled >= spawnMushroomDistance)
+            {
+                mushroomSpawnPos =
+                    player.position +
+                    movementDir * mushroomAheadOffset;
+
+                Instantiate(mushroomPrefab, mushroomSpawnPos, Quaternion.identity);
+
+                mushroomSpawned = true;
+
+                Debug.Log("蘑菇已生成！");
+            }
+        }
+
+        // ===============================
+        // 🟧 玩家走到蘑菇位置 → 播放動畫
+        // ===============================
+        if (mushroomSpawned && !mushroomTriggered)
+        {
+            float dist = Vector3.Distance(player.position, mushroomSpawnPos);
+
+            if (dist < 5f)   // 距離可調整
+            {
+                playerJump.TriggerJumpUp();
+
+                mushroomTriggered = true;
+                Debug.Log("玩家吃到蘑菇動畫觸發！");
+            }
+        }
     }
-    
 }
