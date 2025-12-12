@@ -12,6 +12,9 @@ public class TomatoHitDetector : MonoBehaviour
 
     public Game1GM game1GM;
 
+    public GameObject tomato;
+    public GameObject PingPong;
+
     void Start()
     {
         // 你可以把 AudioSource 放在番茄 prefab 上
@@ -22,6 +25,15 @@ public class TomatoHitDetector : MonoBehaviour
             audioSource = gameObject.AddComponent<AudioSource>();
 
         audioSource.playOnAwake = false;
+    }
+
+    void Update()
+    {
+        if(game1GM.game1State == Game1State.State1)
+        {
+            PingPong.SetActive(!hasScored);
+            tomato.SetActive(hasScored);
+        }
     }
 
     void OnCollisionEnter(Collision collision)
