@@ -16654,28 +16654,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 471366595}
-  - component: {fileID: 471366594}
+  - component: {fileID: 471366596}
   m_Layer: 0
   m_Name: TempSceneChanger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &471366594
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 471366593}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c152fc590bd67844b9e178862f6d8f1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneName: Scene1
-  scene1GM: {fileID: 0}
+  m_IsActive: 1
 --- !u!4 &471366595
 Transform:
   m_ObjectHideFlags: 0
@@ -16691,6 +16677,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &471366596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 471366593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8968bcb12071fbf4fb65532385c5b8f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pj: {fileID: 1179848560}
 --- !u!1 &491798604
 GameObject:
   m_ObjectHideFlags: 0
@@ -23248,7 +23247,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 471366594}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TempSceneChanger, Assembly-CSharp
         m_MethodName: changeScene
         m_Mode: 1

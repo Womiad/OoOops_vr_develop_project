@@ -15,7 +15,7 @@ public class NPCThrowTomato : MonoBehaviour
     public float randomSpinForce = 8f;
     public float verticalOffset = 6f;
 
-    // ⭐ 動畫事件會呼叫這個（可傳入自訂的丟點）
+    // ⭐ 動畫事件會呼叫這個（可傳入自訂的丟點）// 其實換工具的邏輯可以改到這邊來
     public void ThrowTomatoByAnimationEvent(Transform customThrowPoint)
     {
         ThrowTomato(customThrowPoint);
