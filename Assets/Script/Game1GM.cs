@@ -28,6 +28,10 @@ public class Game1GM : MonoBehaviour
 
     public AudioSource sfxSource;
     public AudioClip levelUpClip;
+
+    public Game1Fade game1Fade;
+
+    public GameObject slime;
     
 
 
@@ -60,6 +64,16 @@ public class Game1GM : MonoBehaviour
             if (elapsed >= 90f || score >= 32)
             {
                 ChangeState(Game1State.State2);
+            }
+        }else if (game1State == Game1State.State2)
+        {
+            float elapsed = Time.time - startTime;
+
+    
+            if (elapsed >= 140f || score >= 54)
+            {
+                ChangeState(Game1State.End);
+                game1Fade.FadeAndToBeContinued();
             }
         }
 
@@ -94,8 +108,19 @@ public class Game1GM : MonoBehaviour
             State1Light.SetActive(false);
             State2Light.SetActive(true);
             
-            // Pan邏輯交給pingpongitem　（之後要改到NPCThrowTomato那邊）
+            // Pan邏輯交給NPCThrowTomato
             // pingpongitem狀態交給本身去判斷
+        }
+        else if (game1State == Game1State.End)
+        {
+            TableTennisBat.SetActive(false);
+            PracticeLight.SetActive(false);
+            State1Light.SetActive(false);
+            State2Light.SetActive(true);
+            Fork.SetActive(false);
+            Spatula.SetActive(false);
+            Pan.SetActive(false);
+            slime.SetActive(false);
         }
     }
 

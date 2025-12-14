@@ -7,7 +7,14 @@ public class PlayerJump : MonoBehaviour
     public float jumpHeight = 300f;     // 上升高度
     public float jumpDuration = 2f;     // 上升所需時間
 
+    public FadeController fc;
+
     private bool isJumping = false;
+
+    void Start()
+    {
+        fc.FadeFromBlack(.5f);
+    }
 
     public void TriggerJumpUp()
     {
@@ -54,10 +61,11 @@ public class PlayerJump : MonoBehaviour
     // 🟣 1.8 秒後切換場景
     private IEnumerator ChangeSceneAfterDelay(float delay)
     {
+        fc.FadeToBlack(1.8f);
         yield return new WaitForSeconds(delay);
 
         // 你可以改成你自己的場景名稱
-        SceneManager.LoadScene("game1");
+        SceneManager.LoadScene("Cloud");
 
         // 如果你是用自己的 GM，改成：
         // SceneChanger.Instance.ChangeScene(3);

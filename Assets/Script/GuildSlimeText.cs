@@ -31,7 +31,7 @@ public class GuildSlimeText : MonoBehaviour
         "等你熟練彈跳之後，\n我們就能去更多地方啦！"
     };
 
-    string question = "你好像漸漸熟練了，\n要一起去其他地方逛逛嗎？";
+    string question = "你好像漸漸熟練了，\n要一起去其他地方看看嗎？";
 
     enum TalkStage
     {

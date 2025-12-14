@@ -15,6 +15,14 @@ public class NPCThrowTomato : MonoBehaviour
     public float randomSpinForce = 8f;
     public float verticalOffset = 6f;
 
+    public Game1GM game1GM;
+
+    public GameObject Pan;
+    public GameObject Fork;
+    public GameObject Spatula;
+
+    private GameObject currentTool = null;
+
     // ⭐ 動畫事件會呼叫這個（可傳入自訂的丟點）// 其實換工具的邏輯可以改到這邊來
     public void ThrowTomatoByAnimationEvent(Transform customThrowPoint)
     {
@@ -71,5 +79,30 @@ public class NPCThrowTomato : MonoBehaviour
 
         // 加上旋轉
         rb.angularVelocity = Random.insideUnitSphere * randomSpinForce;
+    }
+
+    void AniCallChooseNewTool()
+    {
+        ChooseNewTool(currentTool);
+    }
+
+
+    void ChooseNewTool(GameObject exclude = null)
+    {
+        if(game1GM.game1State != Game1State.State2) return;
+        GameObject[] tools = { Pan, Fork, Spatula };
+
+        foreach (var t in tools)
+            t.SetActive(false);
+
+        GameObject chosen;
+        do
+        {
+            chosen = tools[Random.Range(0, tools.Length)];
+        }
+        while (chosen == exclude);
+
+        if (game1GM.game1State == Game1State.State2) chosen.SetActive(true);
+        currentTool = chosen;
     }
 }

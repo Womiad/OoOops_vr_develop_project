@@ -36,12 +36,12 @@ public class TomatoHitDetector : MonoBehaviour
 
         audioSource.playOnAwake = false;
         
-        // 有空的話想把換工具放到正確的地方
-        if(Pan.activeSelf) lastTool = Pan;
-        else if(Fork.activeSelf) lastTool = Fork;
-        else if(Spatula.activeSelf) lastTool = Spatula;
-        // 初始先選一個工具
-        if (game1GM.game1State == Game1State.State2) ChooseNewTool(null);
+        // // 有空的話想把換工具放到正確的地方
+        // if(Pan.activeSelf) lastTool = Pan;
+        // else if(Fork.activeSelf) lastTool = Fork;
+        // else if(Spatula.activeSelf) lastTool = Spatula;
+        // // 初始先選一個工具
+        // if (game1GM.game1State == Game1State.State2) ChooseNewTool(null);
     }
 
     void Update()
@@ -65,23 +65,23 @@ public class TomatoHitDetector : MonoBehaviour
         }
     }
 
-    void ChooseNewTool(GameObject exclude)
-    {
-        GameObject[] tools = { Pan, Fork, Spatula };
+    // void ChooseNewTool(GameObject exclude)
+    // {
+    //     GameObject[] tools = { Pan, Fork, Spatula };
 
-        foreach (var t in tools)
-            t.SetActive(false);
+    //     foreach (var t in tools)
+    //         t.SetActive(false);
 
-        GameObject chosen;
-        do
-        {
-            chosen = tools[Random.Range(0, tools.Length)];
-        }
-        while (chosen == exclude);
+    //     GameObject chosen;
+    //     do
+    //     {
+    //         chosen = tools[Random.Range(0, tools.Length)];
+    //     }
+    //     while (chosen == exclude);
 
-        if (game1GM.game1State == Game1State.State2) chosen.SetActive(true);
-        currentTool = chosen;
-    }
+    //     if (game1GM.game1State == Game1State.State2) chosen.SetActive(true);
+    //     currentTool = chosen;
+    // }
 
     void ChooseFood()
     {
