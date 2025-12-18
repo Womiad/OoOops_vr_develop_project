@@ -6,7 +6,10 @@ public class TomatoHitDetector : MonoBehaviour
     private bool lastHasScored = false;
 
     [Header("Hit Sound")]
-    public AudioClip hitSound;
+    public AudioClip SpatulaSound;
+    public AudioClip PanSound;
+    public AudioClip PanSound2;
+    public AudioClip ForkSound;
     public float volume = 1f;
 
     private AudioSource audioSource;
@@ -49,7 +52,7 @@ public class TomatoHitDetector : MonoBehaviour
         if (game1GM.game1State == Game1State.State1)
         {
             PingPong.SetActive(!hasScored);
-            tomato.SetActive(hasScored);
+            egg.SetActive(hasScored);
         }
         else if (game1GM.game1State == Game1State.State2)
         {
@@ -107,14 +110,29 @@ public class TomatoHitDetector : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.CompareTag("Pan"))
+        if (collision.collider.CompareTag("Pan") || collision.collider.CompareTag("Fork") || collision.collider.CompareTag("Spatula"))
         {
             if (hasScored) return;
 
             hasScored = true;
 
-            if (hitSound != null)
-                audioSource.PlayOneShot(hitSound, volume);
+            if (collision.collider.CompareTag("Spatula") && SpatulaSound != null)
+            {
+                audioSource.PlayOneShot(SpatulaSound, volume);
+            }
+            else if (collision.collider.CompareTag("Fork") && ForkSound != null)
+            {
+                audioSource.PlayOneShot(ForkSound, volume);
+            }
+            else if (collision.collider.CompareTag("Pan"))
+            {
+                // ⭐ Pan 音效隨機二選一
+                AudioClip panClip = Random.value < 0.5f ? PanSound : PanSound2;
+
+                if (panClip != null)
+                    audioSource.PlayOneShot(panClip, volume);
+            }
+
 
             game1GM.addOneScorePoint();
         }
