@@ -23,6 +23,24 @@ public class GuildSlimeText : MonoBehaviour
         "其他的，邊跳邊看也可以！"
     };
 
+    string[] linesGuild_zh =
+    {
+        "Hi~你來啦~",
+        "今天負責載你的那顆軟軟的是我的朋友",
+        "坐上去之後，往下壓一壓......",
+        "我們就會彈起來囉！",
+        "其他的，邊跳邊看也可以！"
+    };
+
+    string[] linesGuild_en =
+    {
+        "Hi~ You're here!",
+        "The squishy one giving you a ride today is my friend~",
+        "Once you hop on, give it a little push down...",
+        "And boing—we'll bounce right up!",
+        "As for the rest, you can check it out while jumping around!"
+    };
+
     string[] linesRun =
     {
         "一二一二一二一二",
@@ -31,7 +49,28 @@ public class GuildSlimeText : MonoBehaviour
         "等你熟練彈跳之後，\n我們就能去更多地方啦！"
     };
 
+    string[] linesRun_zh =
+    {
+        "一二一二一二一二",
+        "彈一彈，一起向前吧！",
+        "風景不錯吧，我也很喜歡這裡~",
+        "等你熟練彈跳之後，\n我們就能去更多地方啦！"
+    };
+
+    string[] linesRun_en =
+    {
+        "One, two—one, two, one, two!",
+        "Boing, boing—let's head forward together!",
+        "Nice view, right?\n I really like this place~",
+        "Once you get the hang of bouncing,\nwe'll be able to go lots more places!"
+    };
+
+
     string question = "你好像漸漸熟練了，\n要一起去其他地方看看嗎？";
+    
+    string question_zh = "你好像漸漸熟練了，\n要一起去其他地方看看嗎？";
+    string question_en = "Looks like you're getting the hang of it!\nWant to go check out some other places together?";
+
 
     enum TalkStage
     {
@@ -53,6 +92,7 @@ public class GuildSlimeText : MonoBehaviour
     void Start()
     {
         buttons.SetActive(false);
+        setTextLanguage();
     }
 
     void Update()
@@ -141,5 +181,22 @@ public class GuildSlimeText : MonoBehaviour
 
         // 重設 60 秒計時
         runTimer = 0f;
+    }
+
+    void setTextLanguage()
+    {
+        if (LanguageManager.Instance.IsEnglish())
+        {
+            linesGuild = linesGuild_en;
+            linesRun = linesRun_en;
+            question = question_en;
+        }
+        else
+        {
+            linesGuild = linesGuild_zh;
+            linesRun = linesRun_zh;
+            question = question_zh;
+            
+        }
     }
 }
