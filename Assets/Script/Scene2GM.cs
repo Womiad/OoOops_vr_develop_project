@@ -10,7 +10,8 @@ public enum Scene2State
 
 public class Scene2GM : MonoBehaviour
 {
-    public BluetoothReceiver bluetoothReceiver;
+    // public BluetoothReceiver bluetoothReceiver;
+    public BluetoothReceiver_new bluetoothReceiver;
     public TMP_Text debugText;
 
     private bool explainTimerRunning = false;
@@ -18,7 +19,7 @@ public class Scene2GM : MonoBehaviour
     void Start()
     {
         if (bluetoothReceiver == null)
-            bluetoothReceiver = BluetoothReceiver.Instance;
+            bluetoothReceiver = BluetoothReceiver_new.Instance;
 
     }
 

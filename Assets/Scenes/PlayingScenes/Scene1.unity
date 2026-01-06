@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 37814624}
   - component: {fileID: 37814623}
+  - component: {fileID: 37814625}
   m_Layer: 0
   m_Name: BlueToothReceiver
   m_TagString: Untagged
@@ -143,7 +144,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 37814622}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 172671846d36f7049880784c2dc3f177, type: 3}
   m_Name: 
@@ -186,6 +187,43 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &37814625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37814622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 098fe99008fe0bc4e9ed2870a2f99254, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outputText: 
+  availablePorts:
+  - COM6
+  - COM5
+  - COM4
+  currentPortIndex: 0
+  portName: COM6
+  baudRate: 115200
+  speed: 0
+  speedIncreaseRate: 4
+  speedDecayRate: 2
+  speedFastDecayRate: 8
+  maxSpeed: 25
+  minSpeed: 0
+  isReceiving: 0
+  receiveTimeout: 2
+  receivedCount: 0
+  parseErrorCount: 0
+  lastRawMessage: 
+  dataRate: 0
+  autoRetryTimeout: 7
+  enableAutoRetry: 1
+  maxRetryAttempts: 3
+  enableTestMode: 1
+  testSpeedDelta: 0
 --- !u!1 &40313718
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,7 +253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6cc9c1dce32a2840855eb227def12e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bluetoothReceiver: {fileID: 37814623}
+  bluetoothReceiver: {fileID: 37814625}
   scene1GM: {fileID: 1278402999}
   player: {fileID: 1179848559}
   segmentPrefab: {fileID: 2091156763}
@@ -6120,6 +6158,51 @@ MonoBehaviour:
   m_SendPointerHoverToParent: 1
   _useInitialPressPositionForDrag: 1
   _exclusiveMode: 1
+--- !u!1 &1172347804
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1172347805}
+  - component: {fileID: 1172347806}
+  m_Layer: 0
+  m_Name: TempSpeedBooster
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1172347805
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1172347804}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -50.531757, y: -40.967907, z: 71.82107}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1172347806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1172347804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c98d29b5a93f8b42adfe849a00c6611, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bluetoothReceiver: {fileID: 37814625}
 --- !u!1 &1179848558
 GameObject:
   m_ObjectHideFlags: 0
@@ -6470,7 +6553,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cbbfdeca79e9b84797a150faff1ff24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bluetoothReceiver: {fileID: 37814623}
+  bluetoothReceiver: {fileID: 37814625}
   menuItem: {fileID: 455620594}
   searchingItem: {fileID: 2069365194}
   explainItem: {fileID: 1494822571}
@@ -8755,3 +8838,4 @@ SceneRoots:
   - {fileID: 177651450}
   - {fileID: 471366595}
   - {fileID: 1583898500}
+  - {fileID: 1172347805}

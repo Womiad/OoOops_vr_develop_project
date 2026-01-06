@@ -6,7 +6,7 @@ using System.Collections;
 public class SceneMover : MonoBehaviour
 {
     [Header("藍牙接收器 (抓 speed 用)")]
-    public BluetoothReceiver bluetoothReceiver;
+    public BluetoothReceiver_new bluetoothReceiver;
 
     [Header("GM (看state)")]
     public Scene1GM scene1GM;

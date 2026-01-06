@@ -6,7 +6,7 @@ using System.Collections;
 public class Scene2Mover : MonoBehaviour
 {
     [Header("藍牙接收器 (抓 speed 用)")]
-    public BluetoothReceiver bluetoothReceiver;
+    public BluetoothReceiver_new bluetoothReceiver;
 
     // [Header("GM (看state)")]
     // public Scene2GM scene2GM;
@@ -44,7 +44,7 @@ public class Scene2Mover : MonoBehaviour
     void Start()
     {
         if (bluetoothReceiver == null)
-            bluetoothReceiver = BluetoothReceiver.Instance;
+            bluetoothReceiver = BluetoothReceiver_new.Instance;
 
         if (player == null)
             player = Camera.main.transform;

@@ -35949,6 +35949,51 @@ MonoBehaviour:
   _selectSurface: {fileID: 1061037283}
   _movementProvider: {fileID: 0}
   _tiebreakerScore: 0
+--- !u!1 &1430335270
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1430335272}
+  - component: {fileID: 1430335271}
+  m_Layer: 0
+  m_Name: TempSpeedBooster
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1430335271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1430335270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c98d29b5a93f8b42adfe849a00c6611, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bluetoothReceiver: {fileID: 0}
+--- !u!4 &1430335272
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1430335270}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -50.531757, y: -40.967907, z: 71.82107}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1469987845
 GameObject:
   m_ObjectHideFlags: 0
@@ -48126,3 +48171,4 @@ SceneRoots:
   - {fileID: 177651450}
   - {fileID: 471366595}
   - {fileID: 8637081486482709155}
+  - {fileID: 1430335272}

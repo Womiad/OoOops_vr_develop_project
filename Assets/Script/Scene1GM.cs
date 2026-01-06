@@ -13,7 +13,8 @@ public enum Scene1State
 
 public class Scene1GM : MonoBehaviour
 {
-    public BluetoothReceiver bluetoothReceiver;
+    // public BluetoothReceiver bluetoothReceiver;
+    public BluetoothReceiver_new bluetoothReceiver;
     Scene1State scene1State;
 
     [Header("UI顯示參考")]
@@ -59,6 +60,8 @@ public class Scene1GM : MonoBehaviour
             {
                 setConnectFailed();
             }
+            
+            if(bluetoothReceiver.enableTestMode) scene1State = Scene1State.Explain;
         }
 
         debugText.text = bluetoothReceiver.outputText;
