@@ -2,12 +2,20 @@ using System.IO.Ports;
 using UnityEngine;
 using System.Threading;
 using System.Globalization;
-using TMPro;
 using System;
 using System.Collections.Generic;
+using TMPro;
+using UnityEngine.SceneManagement;
+
+public static class SceneNames
+{
+    public const string Scene1 = "Scene1";
+    public const string Scene2 = "Scene2";
+}
 
 public class BluetoothReceiver_new : MonoBehaviour
 {
+    // retry bug
     #region Public Variables (保持不變)
     [Header("debug string")]
     public string outputText;
@@ -74,6 +82,11 @@ public class BluetoothReceiver_new : MonoBehaviour
     private bool isWaitingForData = false;
 
     public static BluetoothReceiver_new Instance;
+
+    public TMP_Text connectionStatusText; // 用於顯示連線狀態的 UI Text
+
+    string currentScene;
+
     #endregion
 
     #region State Machine
@@ -200,6 +213,8 @@ public class BluetoothReceiver_new : MonoBehaviour
         isWaitingForData = false;
         
         Log($"🔍 正在連線到 {portName}... (嘗試 {currentRetryAttempt + 1}/{maxRetryAttempts})");
+
+        if(currentScene == SceneNames.Scene1) connectionStatusText.text = $"Connecting to {portName}... \n(attempt {currentRetryAttempt + 1}/{maxRetryAttempts})";
 
         connectThread = new Thread(ConnectInBackground);
         connectThread.Start();
@@ -388,6 +403,7 @@ public class BluetoothReceiver_new : MonoBehaviour
     void Start()
     {
         TransitionToState(BTState.Idle);
+        CheckCurrentScene(SceneManager.GetActiveScene());
     }
 
     void Update()
@@ -403,6 +419,25 @@ public class BluetoothReceiver_new : MonoBehaviour
     void OnDestroy()
     {
         CleanupThreadsAndPort();
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        CheckCurrentScene(scene);
+    }
+
+    void CheckCurrentScene(Scene scene)
+    {
+        Debug.Log("現在場景是: " + scene.name);
+
+        if (scene.name == SceneNames.Scene1)
+        {
+            currentScene = SceneNames.Scene1;
+        }
+        else if (scene.name == SceneNames.Scene2)
+        {
+            currentScene = SceneNames.Scene2;
+        }
     }
     #endregion
 
@@ -562,10 +597,12 @@ public class BluetoothReceiver_new : MonoBehaviour
                 }
 
                 // 第一次收到資料，切換到 WaitingData -> Connected
-                if (currentState == BTState.Connecting)
+                if (currentState == BTState.Connecting && latestMessage.Contains("ConnectionSuccess"))
                 {
                     TransitionToState(BTState.WaitingData);
                 }
+
+                //TODO: 太久收不到資料要換port或是宣布失敗
             }
             catch (System.TimeoutException)
             {
@@ -689,9 +726,9 @@ public class BluetoothReceiver_new : MonoBehaviour
 
     void UpdateSpeed(float deltaWeight)
     {
-        if (Mathf.Abs(deltaWeight) > 1f)
+        if (deltaWeight > 1f)
             speed += Mathf.Abs(deltaWeight) * speedIncreaseRate;
-        else if (Mathf.Abs(deltaWeight) <= 0.8f)
+        else if (Mathf.Abs(deltaWeight) <= 0.4f)
             speed -= speedFastDecayRate * Time.deltaTime * 60f;
         else
             speed -= speedDecayRate * Time.deltaTime * 60f;
@@ -705,7 +742,7 @@ public class BluetoothReceiver_new : MonoBehaviour
         {
             line = line.Trim();
 
-            if (line.StartsWith("Weight:"))
+            if (line.StartsWith("ConnectionSuccess, Weight:"))
             {
                 string value = line.Split(':')[1];
                 float weight = float.Parse(value, CultureInfo.InvariantCulture);

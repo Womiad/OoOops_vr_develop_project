@@ -201,16 +201,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outputText: 
   availablePorts:
-  - COM6
-  - COM5
   - COM4
+  - COM5
+  - COM6
   currentPortIndex: 0
   portName: COM6
   baudRate: 115200
   speed: 0
   speedIncreaseRate: 4
   speedDecayRate: 2
-  speedFastDecayRate: 8
+  speedFastDecayRate: 16
   maxSpeed: 25
   minSpeed: 0
   isReceiving: 0
@@ -222,8 +222,9 @@ MonoBehaviour:
   autoRetryTimeout: 7
   enableAutoRetry: 1
   maxRetryAttempts: 3
-  enableTestMode: 1
+  enableTestMode: 0
   testSpeedDelta: 0
+  connectionStatusText: {fileID: 541000821}
 --- !u!1 &40313718
 GameObject:
   m_ObjectHideFlags: 0
@@ -3457,10 +3458,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 169061348}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -379.41998, y: 238.47005}
-  m_SizeDelta: {x: -838.9, y: -560.7401}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 413.2, y: -18.2}
+  m_SizeDelta: {x: 606.47, y: -89.74011}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &708990584
 MonoBehaviour:
@@ -3482,7 +3483,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: temp
+  m_text: temppppppppppppppppppppppp
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -8586,7 +8587,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2069365195
 RectTransform:
   m_ObjectHideFlags: 0
