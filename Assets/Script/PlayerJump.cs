@@ -65,7 +65,7 @@ public class PlayerJump : MonoBehaviour
         yield return new WaitForSeconds(delay);
 
         // 你可以改成你自己的場景名稱
-        SceneManager.LoadScene("Cloud");
+        SceneManager.LoadScene("game1_new");
 
         // 如果你是用自己的 GM，改成：
         // SceneChanger.Instance.ChangeScene(3);

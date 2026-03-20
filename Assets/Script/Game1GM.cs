@@ -25,6 +25,8 @@ public class Game1GM : MonoBehaviour
     public GameObject PracticeLight;
     public GameObject State1Light;
     public GameObject State2Light;
+    public GameObject smallRoom;
+    public GameObject statium;
 
     public AudioSource sfxSource;
     public AudioClip levelUpClip;
@@ -107,6 +109,9 @@ public class Game1GM : MonoBehaviour
             PracticeLight.SetActive(false);
             State1Light.SetActive(false);
             State2Light.SetActive(true);
+
+            smallRoom.SetActive(false);
+            statium.SetActive(true);
             
             // Pan邏輯交給NPCThrowTomato
             // pingpongitem狀態交給本身去判斷

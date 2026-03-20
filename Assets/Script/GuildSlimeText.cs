@@ -167,7 +167,7 @@ public class GuildSlimeText : MonoBehaviour
     // --------------------------
     public void ButtonYesClicked()
     {
-        SceneManager.LoadScene("Scene2");
+        SceneManager.LoadScene("Scene2_new2");
     }
 
     // --------------------------
