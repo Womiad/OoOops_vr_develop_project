@@ -24,8 +24,9 @@ public class Game1GM : MonoBehaviour
     public GameObject TableTennisBat;
     public GameObject PracticeLight;
     public GameObject State1Light;
-    public GameObject State2Light;
+    // public GameObject State2Light;
     public GameObject smallRoom;
+    public GameObject midRoom;
     public GameObject statium;
 
     public AudioSource sfxSource;
@@ -88,9 +89,13 @@ public class Game1GM : MonoBehaviour
             tomato.SetActive(false);
             PracticeLight.SetActive(true);
             State1Light.SetActive(false);
-            State2Light.SetActive(false);
+            // State2Light.SetActive(false);
             Fork.SetActive(false);
             Spatula.SetActive(false);
+            
+            smallRoom.SetActive(true);
+            midRoom.SetActive(false);
+            statium.SetActive(false);
         }
         else if (game1State == Game1State.State1)
         {
@@ -98,19 +103,23 @@ public class Game1GM : MonoBehaviour
             Pan.SetActive(true);
             PracticeLight.SetActive(false);
             State1Light.SetActive(true);
-            State2Light.SetActive(false);
+            // State2Light.SetActive(false);
             Fork.SetActive(false);
             Spatula.SetActive(false);
             // pingpongitem狀態交給本身去判斷
+            smallRoom.SetActive(false);
+            midRoom.SetActive(true);
+            statium.SetActive(false);
         }
         else if (game1State == Game1State.State2)
         {
             TableTennisBat.SetActive(false);
             PracticeLight.SetActive(false);
             State1Light.SetActive(false);
-            State2Light.SetActive(true);
+            // State2Light.SetActive(true);
 
             smallRoom.SetActive(false);
+            midRoom.SetActive(false);
             statium.SetActive(true);
             
             // Pan邏輯交給NPCThrowTomato
@@ -121,11 +130,15 @@ public class Game1GM : MonoBehaviour
             TableTennisBat.SetActive(false);
             PracticeLight.SetActive(false);
             State1Light.SetActive(false);
-            State2Light.SetActive(true);
+            // State2Light.SetActive(true);
             Fork.SetActive(false);
             Spatula.SetActive(false);
             Pan.SetActive(false);
             slime.SetActive(false);
+
+            smallRoom.SetActive(false);
+            midRoom.SetActive(false);
+            statium.SetActive(true);
         }
     }
 
