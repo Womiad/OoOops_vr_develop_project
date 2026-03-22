@@ -77,5 +77,45 @@ public class Game1Fade : MonoBehaviour
         c.a = 1f;
         toBeContinuedText.color = c;
     }
+public void FadeFlash(System.Action onMidPoint)
+{
+    StartCoroutine(FadeFlashRoutine(onMidPoint));
+}
 
+IEnumerator FadeFlashRoutine(System.Action onMidPoint)
+{
+    float duration = 0.3f;
+
+    float t = 0f;
+    Color c = blackImage.color;
+
+    // 🔴 變黑
+    while (t < duration)
+    {
+        t += Time.deltaTime;
+        c.a = Mathf.Lerp(0f, 1f, t / duration);
+        blackImage.color = c;
+        yield return null;
+    }
+
+    c.a = 1f;
+    blackImage.color = c;
+
+    // ⭐ 在全黑時換模型
+    onMidPoint?.Invoke();
+
+    // 🔵 變回透明
+    t = 0f;
+
+    while (t < duration)
+    {
+        t += Time.deltaTime;
+        c.a = Mathf.Lerp(1f, 0f, t / duration);
+        blackImage.color = c;
+        yield return null;
+    }
+
+    c.a = 0f;
+    blackImage.color = c;
+}
 }

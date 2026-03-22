@@ -33,7 +33,7 @@ public class SlimeJumpCharge : MonoBehaviour
 
     void Jump(float jumpPower)
     {
-        rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
-        Debug.Log("Jump! Force: " + jumpPower);
+        // rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
+        // Debug.Log("Jump! Force: " + jumpPower);
     }
 }

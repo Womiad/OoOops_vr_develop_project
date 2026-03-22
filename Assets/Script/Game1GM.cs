@@ -1,4 +1,10 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using System.IO.Ports;
+using System;
+using System.Threading;
+using UnityEngine.UI;
 using TMPro;
 
 public enum Game1State
@@ -11,6 +17,7 @@ public enum Game1State
 
 public class Game1GM : MonoBehaviour
 {
+    public BluetoothReceiver_new bluetoothReceiver;
     public TMP_Text scoreText;
 
     private int score = 0;
@@ -36,19 +43,35 @@ public class Game1GM : MonoBehaviour
 
     public GameObject slime;
     
-
+    public TMP_Text screenText;
 
     private float startTime;   // 開場時間
+
+    int energy = 0;
 
     void Start()
     {
         game1State = Game1State.Practice;
         startTime = Time.time; // 記錄遊戲開始的時間
+        if (bluetoothReceiver == null)
+            bluetoothReceiver = BluetoothReceiver_new.Instance;
     }
 
     void Update()
     {
-        scoreText.text = score + "";
+        if(bluetoothReceiver.speed > 0)
+        {
+            energy += (int)(bluetoothReceiver.speed);
+        }
+        if(Input.GetKey(KeyCode.DownArrow))
+        {
+            Debug.Log("trigger！");
+            energy = 0;
+        }
+        scoreText.text = "energy: " + energy;
+
+
+        screenText.text = bluetoothReceiver.outputText;
 
         // ★ 檢查是否該切換到 State1
         if (game1State == Game1State.Practice)

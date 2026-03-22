@@ -4200,8 +4200,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 3289650
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 0}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -4609,8 +4609,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -175.41998, y: 60.4}
-  m_SizeDelta: {x: -419.8, y: -172.6}
+  m_AnchoredPosition: {x: 283, y: -278.6}
+  m_SizeDelta: {x: 500, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &708990584
 MonoBehaviour:
@@ -8560,6 +8560,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22b85d6fd49965e42a3f8275dc7ef461, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bluetoothReceiver: {fileID: 0}
   scoreText: {fileID: 651771634}
   game1State: 0
   tomato: {fileID: 1125438891}
@@ -8577,6 +8578,7 @@ MonoBehaviour:
   levelUpClip: {fileID: 8300000, guid: 9c795dd5213ad4f48aa0a92885133d1d, type: 3}
   game1Fade: {fileID: 1179848560}
   slime: {fileID: 208937039}
+  screenText: {fileID: 708990584}
 --- !u!82 &1278402999
 AudioSource:
   m_ObjectHideFlags: 0
@@ -9459,7 +9461,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -8.06, y: 2.95}
+  m_AnchoredPosition: {x: -7.02, y: 2.95}
   m_SizeDelta: {x: 800, y: 480}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1481503297
@@ -11301,7 +11303,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1892882073}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
