@@ -15799,7 +15799,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 8663fde4a035a7949978107f5983d59a, type: 3}
   m_Resource: {fileID: 8300000, guid: 8663fde4a035a7949978107f5983d59a, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -185232,6 +185232,7 @@ GameObject:
   - component: {fileID: 1875485812}
   - component: {fileID: 1875485811}
   - component: {fileID: 1875485814}
+  - component: {fileID: 1875485815}
   m_Layer: 5
   m_Name: GuildSlime
   m_TagString: Untagged
@@ -185361,6 +185362,116 @@ MonoBehaviour:
   slimeOpenEye: {fileID: 21300000, guid: 894643d8d59dec34087c33e341cc118a, type: 3}
   slimeCloseEye: {fileID: 21300000, guid: 1b23c4d4d93126a4785bb5a64c1567b8, type: 3}
   guideRoot: {fileID: 1875485807}
+  audioSource: {fileID: 1875485815}
+  linesGuild:
+  - text: Welcome to the Jelly Forest!
+    audio: {fileID: 8300000, guid: b969f61a666315e49968d16a6bf01fa1, type: 3}
+  - text: There are so many magical things here~
+    audio: {fileID: 8300000, guid: 83388a295e0c14a4b9579bb8577b41c1, type: 3}
+  - text: "I heard there\u2019s a glowing mushroom that can make you feel like you\u2019re
+      in heaven!"
+    audio: {fileID: 8300000, guid: 488cc355da20f3e4a97fe9044bbf8315, type: 3}
+  - text: If you see one, be sure to take a closer look!
+    audio: {fileID: 8300000, guid: ac8f325be8e9f94468ac503c4253a6c7, type: 3}
+  - text: I gotta go handle some stuff now, see you next time!
+    audio: {fileID: 8300000, guid: 63446c4d46074254babc6eb1c689bd96, type: 3}
+--- !u!82 &1875485815
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1875485807}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1.5
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1876719360
 GameObject:
   m_ObjectHideFlags: 0

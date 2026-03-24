@@ -741,7 +741,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 11e4102bf18dacf44bcdedc9d2f6053c, type: 3}
   m_Resource: {fileID: 8300000, guid: 11e4102bf18dacf44bcdedc9d2f6053c, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -2903,7 +2903,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 2, y: 2.74}
-  m_SizeDelta: {x: 800, y: 480}
+  m_SizeDelta: {x: 181.01, y: 480}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &680772214
 GameObject:
@@ -5906,6 +5906,7 @@ GameObject:
   - component: {fileID: 1234444638}
   - component: {fileID: 1234444637}
   - component: {fileID: 1234444640}
+  - component: {fileID: 1234444641}
   m_Layer: 5
   m_Name: GuildSlime
   m_TagString: Untagged
@@ -5921,7 +5922,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1234444634}
   m_LocalRotation: {x: 0, y: 0.17296053, z: 0, w: 0.9849287}
-  m_LocalPosition: {x: 0, y: 0, z: 3.88}
+  m_LocalPosition: {x: 0, y: 0, z: 3.16}
   m_LocalScale: {x: 0.005, y: 0.005, z: 0.005}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -5933,7 +5934,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 19.92, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 3.94, y: 3.9}
+  m_AnchoredPosition: {x: 3.56, y: 3.9}
   m_SizeDelta: {x: 800, y: 480}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1234444636
@@ -6035,6 +6036,128 @@ MonoBehaviour:
   slimeImage: {fileID: 641521614}
   slimeOpenEye: {fileID: 21300000, guid: 894643d8d59dec34087c33e341cc118a, type: 3}
   slimeCloseEye: {fileID: 21300000, guid: 1b23c4d4d93126a4785bb5a64c1567b8, type: 3}
+  audioSource: {fileID: 1234444641}
+  linesGuild:
+  - text: Hi~ You're here!
+    audio: {fileID: 8300000, guid: dcbad535f2df75443855f4d6176a1776, type: 3}
+  - text: The squishy one giving you a ride today is my friend~
+    audio: {fileID: 8300000, guid: db1f8e118b9b7f044a6dce917a9b081f, type: 3}
+  - text: Once you hop on, give it a little push down...
+    audio: {fileID: 8300000, guid: 36a312e3ac521e04a80bda33ff56da72, type: 3}
+  - text: "And boing\u2014we'll bounce right up!"
+    audio: {fileID: 8300000, guid: bd866c87f276f6948abcbc8bf8201fcd, type: 3}
+  - text: As for the rest, you can check it out while jumping around!
+    audio: {fileID: 8300000, guid: e18548837cf5f3d4b973c39f8f59762d, type: 3}
+  linesRun:
+  - text: "One, two\u2014one, two, one, two!"
+    audio: {fileID: 8300000, guid: d9035c5d404517d4aa0cb7ad829a75f8, type: 3}
+  - text: "Boing, boing\u2014let's head forward together!"
+    audio: {fileID: 8300000, guid: 3c6c8466c29c98846b13afbbe656aeb5, type: 3}
+  - text: Nice view, right?\n I really like this place~
+    audio: {fileID: 8300000, guid: 83388a295e0c14a4b9579bb8577b41c1, type: 3}
+  - text: Once you get the hang of bouncing,\nwe'll be able to go lots more places!
+    audio: {fileID: 8300000, guid: 92e71961d2b015e41a7ccefbd9dfbc94, type: 3}
+  question:
+    text: Looks like you're getting the hang of it!\nWant to go check out some other
+      places together?
+    audio: {fileID: 8300000, guid: 16e1b3edeee19d24cb4e5b194cb450e4, type: 3}
+--- !u!82 &1234444641
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1234444634}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1.5
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1278402996
 GameObject:
   m_ObjectHideFlags: 0
@@ -7666,7 +7789,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 24.761837, y: 0.90224737, z: 28.237123}
+  m_Size: {x: 51.4, y: 0.90224737, z: 32.8}
   m_Center: {x: -0.20646992, y: 0.16, z: 0.46792865}
 --- !u!1001 &1762496575
 PrefabInstance:
@@ -7859,7 +7982,7 @@ MonoBehaviour:
   _headPoseRelativeOffsetRotation: {x: 0, y: 0, z: 0}
   _headPoseRelativeOffsetTranslation: {x: 0, y: 0, z: 0}
   profilerTcpPort: 32419
-  expandMixedRealityCapturePropertySheet: 0
+  expandMixedRealityCapturePropertySheet: 1
   enableMixedReality: 0
   compositionMethod: 0
   extraHiddenLayers:
@@ -8169,7 +8292,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position: {x: 0, y: 0, z: 0}
-  _size: {x: 800, y: 480, z: 0.01}
+  _size: {x: 181.01, y: 480, z: 0.01}
 --- !u!114 &1895192758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8555,8 +8678,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 24.761837, y: 0.90224737, z: 28.237123}
-  m_Center: {x: -0.20646992, y: 0.16, z: 0.46792865}
+  m_Size: {x: 30.13, y: 0.90224737, z: 55.5}
+  m_Center: {x: -0.20647049, y: 0.16000003, z: 0.94428474}
 --- !u!1 &2029492915
 GameObject:
   m_ObjectHideFlags: 0
@@ -8735,6 +8858,10 @@ PrefabInstance:
       propertyPath: _ovrCameraRig
       value: 
       objectReference: {fileID: 1773887328}
+    - target: {fileID: 6744807187139327233, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

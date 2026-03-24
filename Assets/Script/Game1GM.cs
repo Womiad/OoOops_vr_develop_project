@@ -47,7 +47,8 @@ public class Game1GM : MonoBehaviour
 
     private float startTime;   // 開場時間
 
-    int energy = 0;
+    public int energy = 0;
+    public int maxEnergy = 1000;
 
     void Start()
     {
@@ -68,7 +69,8 @@ public class Game1GM : MonoBehaviour
             Debug.Log("trigger！");
             energy = 0;
         }
-        scoreText.text = "energy: " + energy;
+        if (energy > maxEnergy) energy = maxEnergy;
+        scoreText.text = "Energy:\n" + energy;
 
 
         screenText.text = bluetoothReceiver.outputText;
