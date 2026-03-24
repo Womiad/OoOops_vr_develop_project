@@ -50,29 +50,72 @@ public class Game1GM : MonoBehaviour
     public int energy = 0;
     public int maxEnergy = 1000;
 
+    public Animator robotAnimator;        // 機器人 Animator
+    public Animator robotFootAnimator;        // 機器人 Animator
+    public ParticleSystem smokeEffect;    // 冒煙粒子效果
+    public float minSmokeDuration = 0.5f; // 最短持續時間
+    public float maxSmokeDuration = 5f;   // 最長持續時間
+
+    private bool showingHint = false; // 是否正在顯示提示文字
+
+
+    [Header("壞掉音效")]
+    public AudioClip brokenSoundClip;    // 壞掉音效片段
+
     void Start()
     {
         game1State = Game1State.Practice;
         startTime = Time.time; // 記錄遊戲開始的時間
         if (bluetoothReceiver == null)
             bluetoothReceiver = BluetoothReceiver_new.Instance;
+
+        // 啟動定時提示 Coroutine
+        StartCoroutine(ShowTriggerHintRoutine());
     }
 
+    // Coroutine: 每3秒顯示一次提示文字，持續1秒後回到分數
+    // Coroutine: 每3秒顯示一次提示文字，持續1秒後回到分數
+    IEnumerator ShowTriggerHintRoutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(3f);
+
+            showingHint = true;
+            scoreText.text = "Press Trigger to Use Skill!";
+
+            yield return new WaitForSeconds(1f);
+
+            showingHint = false;
+            // 下一幀 Update() 會立刻把分數顯示回來
+        }
+    }
     void Update()
     {
         if(bluetoothReceiver.speed > 0)
         {
             energy += (int)(bluetoothReceiver.speed);
         }
-        if(Input.GetKey(KeyCode.DownArrow))
-        {
-            Debug.Log("trigger！");
-            energy = 0;
-        }
+        // if(Input.GetKey(KeyCode.DownArrow))
+        // {
+        //     Debug.Log("trigger！");
+        //     energy = 0;
+        // }
         if (energy > maxEnergy) energy = maxEnergy;
-        scoreText.text = "Energy:\n" + energy;
+        if (!showingHint) scoreText.text = "Energy:\n" + energy;
 
+        // TODO
+        //如果按下VR手把的板機按鈕，能量歸零，機器人動畫暫停，冒煙效果(粒子效果)播放
+        //根據原本持有的能量決定持續長短 (例如能量越多，效果持續越久，0.5~5秒不等)
+         // ★ TODO: 板機觸發特效
+         // ★ 兩手板機都可以觸發
+        bool rightTrigger = OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger);
+        bool leftTrigger  = OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger);
 
+        if ((rightTrigger || leftTrigger) && energy > 0)
+        {
+            TriggerSmokeEffect();
+        }
         screenText.text = bluetoothReceiver.outputText;
 
         // ★ 檢查是否該切換到 State1
@@ -183,6 +226,50 @@ public class Game1GM : MonoBehaviour
         {
             sfxSource.PlayOneShot(levelUpClip);
         }
+    }
+
+    // 新增方法
+    void TriggerSmokeEffect()
+    {
+        // 計算持續時間：能量越多，時間越長
+        float t = (float)energy / maxEnergy; // 0~1
+        float duration = Mathf.Lerp(minSmokeDuration, maxSmokeDuration, t);
+
+        // 停止機器人動畫
+        if (robotAnimator != null)
+            robotAnimator.enabled = false;
+        if (robotFootAnimator != null)
+            robotFootAnimator.enabled = false;
+
+        // 播放壞掉音效
+        if (sfxSource != null && brokenSoundClip != null)
+            sfxSource.PlayOneShot(brokenSoundClip);
+
+        // 播放冒煙粒子
+        if (smokeEffect != null)
+        {
+            smokeEffect.Play();
+            StartCoroutine(StopSmokeAfterDuration(duration));
+        }
+
+        // 歸零能量
+        energy = 0;
+    }
+
+    IEnumerator StopSmokeAfterDuration(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+
+        // 停止冒煙
+        if (smokeEffect != null)
+            smokeEffect.Stop();
+
+        // 恢復機器人動畫
+        if (robotAnimator != null)
+            robotAnimator.enabled = true;
+        if (robotFootAnimator != null)
+            robotFootAnimator.enabled = true;
+
     }
 
 }
