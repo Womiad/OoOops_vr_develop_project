@@ -17,6 +17,10 @@ public class BoxController : MonoBehaviour
     [Header("點擊文字")]
     public GameObject clickText;
 
+    [Header("final fade")]
+    public FinalFade finalFade;
+
+
     private bool isTriggered = false;
 
     void Start()
@@ -33,7 +37,7 @@ public class BoxController : MonoBehaviour
     {
         // ✅ 左右手都可觸發
         if ((OVRInput.GetDown(clickButton, OVRInput.Controller.RTouch) ||
-             OVRInput.GetDown(clickButton, OVRInput.Controller.LTouch)) 
+             OVRInput.GetDown(clickButton, OVRInput.Controller.LTouch) || Input.GetKeyDown(KeyCode.R)) 
              && !isTriggered)
         {
             Ray ray = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
@@ -77,5 +81,9 @@ public class BoxController : MonoBehaviour
         {
             Debug.LogWarning("沒有指定 targetAnimator！");
         }
+
+        yield return new WaitForSeconds(2f);
+
+        finalFade.FadeAndToBeContinued();
     }
 }

@@ -5,17 +5,12 @@ using UnityEngine.UI;   // 記得加
 using UnityEngine.SceneManagement;
 
 
-public class Game1Fade : MonoBehaviour
+public class FinalFade : MonoBehaviour
 {
-    public FadeController fc;
-
-    // [Header("To Be Continued Text")]
-    // public TMP_Text toBeContinuedText;
 
     [Header("Fade Black Image")]
     public RawImage blackImage;
 
-    public string nextSceneName = "final"; 
 
 
     void Start()
@@ -27,17 +22,6 @@ public class Game1Fade : MonoBehaviour
         bc.a = 0f;
         blackImage.color = bc;
     }
-
-    // To Be Continued 文字一開始透明
-    // if (toBeContinuedText != null)
-    // {
-    //     Color c = toBeContinuedText.color;
-    //     c.a = 0f;
-    //     toBeContinuedText.color = c;
-    // }
-
-    // 開場淡入
-    fc.FadeFromBlack(1f);
 }
 
 
@@ -67,31 +51,13 @@ public class Game1Fade : MonoBehaviour
 
     // 2️⃣ TMP alpha 0 → 1
     t = 0f;
-    // Color c = toBeContinuedText.color;
 
     while (t < duration)
     {
         t += Time.deltaTime;
-        // c.a = Mathf.Lerp(0f, 1f, t / duration);
-        // toBeContinuedText.color = c;
         yield return null;
     }
 
-    // c.a = 1f;
-    // toBeContinuedText.color = c;
-
-    // 3️⃣ 停留幾秒（讓玩家看到畫面）
-    yield return new WaitForSeconds(2f);
-
-    // 4️⃣ 切換場景
-    if (!string.IsNullOrEmpty(nextSceneName))
-    {
-        SceneManager.LoadScene(nextSceneName);
-    }
-    else
-    {
-        Debug.LogWarning("沒有設定 nextSceneName！");
-    }
 }
 public void FadeFlash(System.Action onMidPoint)
 {
@@ -115,23 +81,6 @@ IEnumerator FadeFlashRoutine(System.Action onMidPoint)
     }
 
     c.a = 1f;
-    blackImage.color = c;
-
-    // ⭐ 在全黑時換模型
-    onMidPoint?.Invoke();
-
-    // 🔵 變回透明
-    t = 0f;
-
-    while (t < duration)
-    {
-        t += Time.deltaTime;
-        c.a = Mathf.Lerp(1f, 0f, t / duration);
-        blackImage.color = c;
-        yield return null;
-    }
-
-    c.a = 0f;
     blackImage.color = c;
 }
 }
