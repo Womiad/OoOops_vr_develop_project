@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using System.Collections;
 using UnityEngine.UI;   // 記得加
+using UnityEngine.SceneManagement;
 
 
 public class Game1Fade : MonoBehaviour
@@ -13,6 +14,8 @@ public class Game1Fade : MonoBehaviour
 
     [Header("Fade Black Image")]
     public RawImage blackImage;
+
+    public string nextSceneName = "final"; 
 
 
     void Start()
@@ -44,39 +47,52 @@ public class Game1Fade : MonoBehaviour
     }
 
     IEnumerator FadeOutAndShowText()
+{
+    float duration = 1f;
+
+    // 1️⃣ RawImage 淡黑
+    float t = 0f;
+    Color blackColor = blackImage.color;
+
+    while (t < duration)
     {
-        float duration = 1f;
-
-        // 1️⃣ RawImage 淡黑
-        float t = 0f;
-        Color blackColor = blackImage.color;
-
-        while (t < duration)
-        {
-            t += Time.deltaTime;
-            blackColor.a = Mathf.Lerp(0f, 1f, t / duration);
-            blackImage.color = blackColor;
-            yield return null;
-        }
-
-        blackColor.a = 1f;
+        t += Time.deltaTime;
+        blackColor.a = Mathf.Lerp(0f, 1f, t / duration);
         blackImage.color = blackColor;
-
-        // 2️⃣ TMP alpha 0 → 1
-        t = 0f;
-        Color c = toBeContinuedText.color;
-
-        while (t < duration)
-        {
-            t += Time.deltaTime;
-            c.a = Mathf.Lerp(0f, 1f, t / duration);
-            toBeContinuedText.color = c;
-            yield return null;
-        }
-
-        c.a = 1f;
-        toBeContinuedText.color = c;
+        yield return null;
     }
+
+    blackColor.a = 1f;
+    blackImage.color = blackColor;
+
+    // 2️⃣ TMP alpha 0 → 1
+    t = 0f;
+    Color c = toBeContinuedText.color;
+
+    while (t < duration)
+    {
+        t += Time.deltaTime;
+        c.a = Mathf.Lerp(0f, 1f, t / duration);
+        toBeContinuedText.color = c;
+        yield return null;
+    }
+
+    c.a = 1f;
+    toBeContinuedText.color = c;
+
+    // 3️⃣ 停留幾秒（讓玩家看到畫面）
+    yield return new WaitForSeconds(2f);
+
+    // 4️⃣ 切換場景
+    if (!string.IsNullOrEmpty(nextSceneName))
+    {
+        SceneManager.LoadScene(nextSceneName);
+    }
+    else
+    {
+        Debug.LogWarning("沒有設定 nextSceneName！");
+    }
+}
 public void FadeFlash(System.Action onMidPoint)
 {
     StartCoroutine(FadeFlashRoutine(onMidPoint));

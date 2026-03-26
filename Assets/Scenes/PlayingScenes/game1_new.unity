@@ -8245,7 +8245,7 @@ Transform:
   m_GameObject: {fileID: 1179848558}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.45, y: -1.408, z: 0.466}
+  m_LocalPosition: {x: -3.45, y: -1.22, z: 0.466}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10979,17 +10979,21 @@ PrefabInstance:
       propertyPath: m_IsKinematic
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 665928120430442438, guid: ed00ba4dec0d7814687d4b2d4e8386ff, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2401369840925804315, guid: ed00ba4dec0d7814687d4b2d4e8386ff, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.74
+      value: 2.48
       objectReference: {fileID: 0}
     - target: {fileID: 2401369840925804315, guid: ed00ba4dec0d7814687d4b2d4e8386ff, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.305
+      value: 1.8599999
       objectReference: {fileID: 0}
     - target: {fileID: 2401369840925804315, guid: ed00ba4dec0d7814687d4b2d4e8386ff, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.74
+      value: 2.48
       objectReference: {fileID: 0}
     - target: {fileID: 2401369840925804315, guid: ed00ba4dec0d7814687d4b2d4e8386ff, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10997,7 +11001,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2401369840925804315, guid: ed00ba4dec0d7814687d4b2d4e8386ff, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.34
+      value: 1.39
       objectReference: {fileID: 0}
     - target: {fileID: 2401369840925804315, guid: ed00ba4dec0d7814687d4b2d4e8386ff, type: 3}
       propertyPath: m_LocalPosition.z
@@ -11039,15 +11043,32 @@ PrefabInstance:
       propertyPath: m_Name
       value: Slime
       objectReference: {fileID: 0}
+    - target: {fileID: 5483925795163778710, guid: ed00ba4dec0d7814687d4b2d4e8386ff, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7707971439865787828, guid: ed00ba4dec0d7814687d4b2d4e8386ff, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: de3ee969b3bbed44185cb5e7220f44e3, type: 2}
+    - target: {fileID: 8230551268155521034, guid: ed00ba4dec0d7814687d4b2d4e8386ff, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8230551268155521034, guid: ed00ba4dec0d7814687d4b2d4e8386ff, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8542072049419473914, guid: ed00ba4dec0d7814687d4b2d4e8386ff, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8542072049419473914, guid: ed00ba4dec0d7814687d4b2d4e8386ff, type: 3}
       propertyPath: m_IsTrigger
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 217865522995960104, guid: ed00ba4dec0d7814687d4b2d4e8386ff, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -11317,7 +11338,7 @@ MonoBehaviour:
   requestRecordAudioPermissionOnStartup: 0
   requestPassthroughCameraAccessPermissionOnStartup: 0
   _localDimming: 1
-  _trackingOriginType: 1
+  _trackingOriginType: 0
   usePositionTracking: 1
   useRotationTracking: 1
   useIPDInPositionTracking: 1
@@ -11354,7 +11375,7 @@ Transform:
   m_GameObject: {fileID: 1773887325}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.874, z: 0}
+  m_LocalPosition: {x: 0, y: 3.31, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
