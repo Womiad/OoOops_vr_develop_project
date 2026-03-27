@@ -1,45 +1,32 @@
 using UnityEngine;
 using TMPro;
 using System.Collections;
-using UnityEngine.UI;   // 記得加
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
 
 public class Game1Fade : MonoBehaviour
 {
     public FadeController fc;
 
-    // [Header("To Be Continued Text")]
-    // public TMP_Text toBeContinuedText;
-
     [Header("Fade Black Image")]
     public RawImage blackImage;
 
+    [Header("BGM")]
+    public AudioSource bgmSource;   // ⭐ 新增
+
     public string nextSceneName = "final"; 
 
-
     void Start()
-{
-    // 黑幕一開始透明
-    if (blackImage != null)
     {
-        Color bc = blackImage.color;
-        bc.a = 0f;
-        blackImage.color = bc;
+        if (blackImage != null)
+        {
+            Color bc = blackImage.color;
+            bc.a = 0f;
+            blackImage.color = bc;
+        }
+
+        fc.FadeFromBlack(1f);
     }
-
-    // To Be Continued 文字一開始透明
-    // if (toBeContinuedText != null)
-    // {
-    //     Color c = toBeContinuedText.color;
-    //     c.a = 0f;
-    //     toBeContinuedText.color = c;
-    // }
-
-    // 開場淡入
-    fc.FadeFromBlack(1f);
-}
-
 
     public void FadeAndToBeContinued()
     {
@@ -47,91 +34,104 @@ public class Game1Fade : MonoBehaviour
     }
 
     IEnumerator FadeOutAndShowText()
-{
-    float duration = 1f;
-
-    // 1️⃣ RawImage 淡黑
-    float t = 0f;
-    Color blackColor = blackImage.color;
-
-    while (t < duration)
     {
-        t += Time.deltaTime;
-        blackColor.a = Mathf.Lerp(0f, 1f, t / duration);
+        float duration = 1f;
+
+        float t = 0f;
+        Color blackColor = blackImage.color;
+
+        float startVolume = bgmSource != null ? bgmSource.volume : 0f;
+
+        // ⭐ 畫面 + BGM 同時淡出
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            float lerp = t / duration;
+
+            // 畫面變黑
+            blackColor.a = Mathf.Lerp(0f, 1f, lerp);
+            blackImage.color = blackColor;
+
+            // 音量淡出
+            if (bgmSource != null)
+                bgmSource.volume = Mathf.Lerp(startVolume, 0f, lerp);
+
+            yield return null;
+        }
+
+        blackColor.a = 1f;
         blackImage.color = blackColor;
-        yield return null;
+
+        if (bgmSource != null)
+            bgmSource.volume = 0f;
+
+        yield return new WaitForSeconds(2f);
+
+        if (!string.IsNullOrEmpty(nextSceneName))
+        {
+            SceneManager.LoadScene(nextSceneName);
+        }
+        else
+        {
+            Debug.LogWarning("沒有設定 nextSceneName！");
+        }
     }
 
-    blackColor.a = 1f;
-    blackImage.color = blackColor;
-
-    // 2️⃣ TMP alpha 0 → 1
-    t = 0f;
-    // Color c = toBeContinuedText.color;
-
-    while (t < duration)
+    public void FadeFlash(System.Action onMidPoint)
     {
-        t += Time.deltaTime;
-        // c.a = Mathf.Lerp(0f, 1f, t / duration);
-        // toBeContinuedText.color = c;
-        yield return null;
+        StartCoroutine(FadeFlashRoutine(onMidPoint));
     }
 
-    // c.a = 1f;
-    // toBeContinuedText.color = c;
-
-    // 3️⃣ 停留幾秒（讓玩家看到畫面）
-    yield return new WaitForSeconds(2f);
-
-    // 4️⃣ 切換場景
-    if (!string.IsNullOrEmpty(nextSceneName))
+    IEnumerator FadeFlashRoutine(System.Action onMidPoint)
     {
-        SceneManager.LoadScene(nextSceneName);
-    }
-    else
-    {
-        Debug.LogWarning("沒有設定 nextSceneName！");
-    }
-}
-public void FadeFlash(System.Action onMidPoint)
-{
-    StartCoroutine(FadeFlashRoutine(onMidPoint));
-}
+        float duration = 0.3f;
 
-IEnumerator FadeFlashRoutine(System.Action onMidPoint)
-{
-    float duration = 0.3f;
+        float t = 0f;
+        Color c = blackImage.color;
 
-    float t = 0f;
-    Color c = blackImage.color;
+        float startVolume = bgmSource != null ? bgmSource.volume : 0f;
 
-    // 🔴 變黑
-    while (t < duration)
-    {
-        t += Time.deltaTime;
-        c.a = Mathf.Lerp(0f, 1f, t / duration);
+        // 🔴 變黑 + 音量下降
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            float lerp = t / duration;
+
+            c.a = Mathf.Lerp(0f, 1f, lerp);
+            blackImage.color = c;
+
+            if (bgmSource != null)
+                bgmSource.volume = Mathf.Lerp(startVolume, 0f, lerp);
+
+            yield return null;
+        }
+
+        c.a = 1f;
         blackImage.color = c;
-        yield return null;
-    }
 
-    c.a = 1f;
-    blackImage.color = c;
+        onMidPoint?.Invoke();
 
-    // ⭐ 在全黑時換模型
-    onMidPoint?.Invoke();
+        // 🔵 變回透明 + 音量回來
+        t = 0f;
 
-    // 🔵 變回透明
-    t = 0f;
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            float lerp = t / duration;
 
-    while (t < duration)
-    {
-        t += Time.deltaTime;
-        c.a = Mathf.Lerp(1f, 0f, t / duration);
+            c.a = Mathf.Lerp(1f, 0f, lerp);
+            blackImage.color = c;
+
+            if (bgmSource != null)
+                bgmSource.volume = Mathf.Lerp(0f, startVolume, lerp);
+
+            yield return null;
+        }
+
+        c.a = 0f;
         blackImage.color = c;
-        yield return null;
-    }
 
-    c.a = 0f;
-    blackImage.color = c;
-}
+        if (bgmSource != null)
+            bgmSource.volume = startVolume;
+    }
 }

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public static class SceneNames
 {
@@ -86,6 +87,8 @@ public class BluetoothReceiver_new : MonoBehaviour
     public TMP_Text connectionStatusText; // 用於顯示連線狀態的 UI Text
 
     string currentScene;
+
+    float sliderValue = 1f; // 預設為 1，表示不調整速度
 
     #endregion
 
@@ -689,7 +692,9 @@ public class BluetoothReceiver_new : MonoBehaviour
                         Weight = currentData.Weight - lastData.Weight
                     };
 
-                    UpdateSpeed(delta.Weight);
+                    float speedScale = PlayerPrefs.GetFloat("speed_scale", 1f);
+
+                    UpdateSpeed(delta.Weight * speedScale);
 
                     displayText =
                         $"🔗 Connected ({portName}) | 📦 Received: {receivedCount} | ❌ Errors: {parseErrorCount} | 📊 Rate: {dataRate:F1} Hz\n\n" +
