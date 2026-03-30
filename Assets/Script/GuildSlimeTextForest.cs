@@ -37,7 +37,7 @@ public class GuildSlimeTextForest : MonoBehaviour
     int index = 0;
 
     float talkTimer = 0f;
-    float interval = 3f;
+    public float interval = 5f;
 
     void Start()
     {

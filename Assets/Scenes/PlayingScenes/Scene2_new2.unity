@@ -185742,6 +185742,7 @@ MonoBehaviour:
     audio: {fileID: 8300000, guid: ac8f325be8e9f94468ac503c4253a6c7, type: 3}
   - text: I gotta go handle some stuff now, see you next time!
     audio: {fileID: 8300000, guid: 63446c4d46074254babc6eb1c689bd96, type: 3}
+  interval: 5
 --- !u!82 &1875485815
 AudioSource:
   m_ObjectHideFlags: 0

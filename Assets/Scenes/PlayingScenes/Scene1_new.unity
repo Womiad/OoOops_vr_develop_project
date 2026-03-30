@@ -2105,8 +2105,8 @@ RectTransform:
   m_GameObject: {fileID: 455620594}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.86, y: 0.86, z: 0.86}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 564424457}
   - {fileID: 1578180334}
@@ -6140,6 +6140,8 @@ MonoBehaviour:
     text: Looks like you're getting the hang of it!\nWant to go check out some other
       places together?
     audio: {fileID: 8300000, guid: 16e1b3edeee19d24cb4e5b194cb450e4, type: 3}
+  interval: 5
+  askInterval: 30
 --- !u!82 &1234444641
 AudioSource:
   m_ObjectHideFlags: 0

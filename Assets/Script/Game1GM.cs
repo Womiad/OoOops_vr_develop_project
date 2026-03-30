@@ -58,6 +58,8 @@ public class Game1GM : MonoBehaviour
 
     private bool showingHint = false; // 是否正在顯示提示文字
 
+    public BossHealthSystem bossHealthSystem;
+
 
     [Header("壞掉音效")]
     public AudioClip brokenSoundClip;    // 壞掉音效片段
@@ -90,6 +92,17 @@ public class Game1GM : MonoBehaviour
             // 下一幀 Update() 會立刻把分數顯示回來
         }
     }
+
+    public void NextState()
+    {
+        if (game1State == Game1State.Practice)
+            ChangeState(Game1State.State1);
+        else if (game1State == Game1State.State1)
+            ChangeState(Game1State.State2);
+        else if (game1State == Game1State.State2)
+            ChangeState(Game1State.End);
+    }
+
     void Update()
     {
         if(bluetoothReceiver.speed > 0)
@@ -114,39 +127,40 @@ public class Game1GM : MonoBehaviour
 
         if ((rightTrigger || leftTrigger) && energy > 0)
         {
+            bossHealthSystem.TakeDamage(energy); 
             TriggerSmokeEffect();
         }
         screenText.text = bluetoothReceiver.outputText;
 
         // ★ 檢查是否該切換到 State1
-        if (game1State == Game1State.Practice)
-        {
-            float elapsed = Time.time - startTime;
+        // if (game1State == Game1State.Practice)
+        // {
+        //     float elapsed = Time.time - startTime;
 
-            if (elapsed >= 40f || score >= 16)
-            {
-                ChangeState(Game1State.State1);
-            }
-        }else if (game1State == Game1State.State1)
-        {
-            float elapsed = Time.time - startTime;
-
-    
-            if (elapsed >= 90f || score >= 32)
-            {
-                ChangeState(Game1State.State2);
-            }
-        }else if (game1State == Game1State.State2)
-        {
-            float elapsed = Time.time - startTime;
+        //     if (elapsed >= 40f)
+        //     {
+        //         ChangeState(Game1State.State1);
+        //     }
+        // }else if (game1State == Game1State.State1)
+        // {
+        //     float elapsed = Time.time - startTime;
 
     
-            if (elapsed >= 140f || score >= 54)
-            {
-                ChangeState(Game1State.End);
-                game1Fade.FadeAndToBeContinued();
-            }
-        }
+        //     if (elapsed >= 90f)
+        //     {
+        //         ChangeState(Game1State.State2);
+        //     }
+        // }else if (game1State == Game1State.State2)
+        // {
+        //     float elapsed = Time.time - startTime;
+
+    
+        //     if (elapsed >= 140f)
+        //     {
+        //         ChangeState(Game1State.End);
+        //         game1Fade.FadeAndToBeContinued();
+        //     }
+        // }
 
         // 狀態控制
         if (game1State == Game1State.Practice)

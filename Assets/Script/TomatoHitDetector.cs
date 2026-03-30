@@ -29,6 +29,8 @@ public class TomatoHitDetector : MonoBehaviour
     GameObject currentFood;
 
     private GameObject lastTool = null;
+
+    public BossHealthSystem bossHealthSystem;
     
 
     void Start()
@@ -113,6 +115,7 @@ public class TomatoHitDetector : MonoBehaviour
         if (collision.collider.CompareTag("Pan") || collision.collider.CompareTag("Fork") || collision.collider.CompareTag("Spatula"))
         {
             if (hasScored) return;
+            bossHealthSystem.TakeDamage(100f); // 每次碰撞造成 100 點傷害
 
             hasScored = true;
 

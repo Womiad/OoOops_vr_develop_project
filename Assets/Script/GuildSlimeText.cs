@@ -42,10 +42,10 @@ public class GuildSlimeText : MonoBehaviour
     int index = 0;
 
     float talkTimer = 0f;
-    float interval = 3f;
+    public float interval = 5f;
 
     float runTimer = 0f;
-    float askInterval = 30f;
+    public float askInterval = 30f;
 
     bool isAsking = false;
 
