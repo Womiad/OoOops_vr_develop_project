@@ -30,6 +30,8 @@ public class Scene1GM : MonoBehaviour
 
     void Start()
     {
+        if (bluetoothReceiver == null)
+            bluetoothReceiver = BluetoothReceiver_new.Instance;
         scene1State = Scene1State.Menu;
         setUI();
     }
@@ -76,7 +78,10 @@ public class Scene1GM : MonoBehaviour
             setUI();
             
             // ✅ 然後才開始連線
-            bluetoothReceiver.Connect();
+            if(bluetoothReceiver.currentState == BluetoothReceiver_new.BTState.Idle)
+            {
+                bluetoothReceiver.Connect();
+            }
         }
     }
 

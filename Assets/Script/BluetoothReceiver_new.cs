@@ -93,7 +93,7 @@ public class BluetoothReceiver_new : MonoBehaviour
     #endregion
 
     #region State Machine
-    private enum BTState
+    public enum BTState
     {
         Idle,           // 初始狀態，未連線
         Connecting,     // 正在嘗試連線
@@ -103,7 +103,7 @@ public class BluetoothReceiver_new : MonoBehaviour
         TestMode        // 測試模式（不需連線）
     }
 
-    private BTState currentState = BTState.Idle;
+    public BTState currentState = BTState.Idle;
     private BTState previousState = BTState.Idle;
 
     private void TransitionToState(BTState newState)

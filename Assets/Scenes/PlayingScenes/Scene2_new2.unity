@@ -392,7 +392,7 @@ MonoBehaviour:
   offsetZ: 340.7
   startPosition: {x: 6.5, y: 2.7, z: -65.2}
   mushroomPrefab: {fileID: 8637081486482709156}
-  spawnMushroomDistance: 600
+  spawnMushroomDistance: 650
   mushroomAheadOffset: 50
   playerJump: {fileID: 1179848560}
 --- !u!1 &50173011

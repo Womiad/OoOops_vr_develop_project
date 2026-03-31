@@ -115,7 +115,7 @@ public class TomatoHitDetector : MonoBehaviour
         if (collision.collider.CompareTag("Pan") || collision.collider.CompareTag("Fork") || collision.collider.CompareTag("Spatula"))
         {
             if (hasScored) return;
-            bossHealthSystem.TakeDamage(100f); // 每次碰撞造成 100 點傷害
+            bossHealthSystem.TakeDamage(300f); // 每次碰撞造成 300 點傷害
 
             hasScored = true;
 

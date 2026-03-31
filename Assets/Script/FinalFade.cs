@@ -11,7 +11,7 @@ public class FinalFade : MonoBehaviour
     [Header("Fade Black Image")]
     public RawImage blackImage;
 
-
+    public string sceneName = "Scene1_new"; // 預設場景名稱，可以在 Inspector 中修改
 
     void Start()
 {
@@ -58,6 +58,9 @@ public class FinalFade : MonoBehaviour
         yield return null;
     }
 
+    
+    ToNextScene();
+
 }
 public void FadeFlash(System.Action onMidPoint)
 {
@@ -82,5 +85,11 @@ IEnumerator FadeFlashRoutine(System.Action onMidPoint)
 
     c.a = 1f;
     blackImage.color = c;
+    ToNextScene();
 }
+
+    public void ToNextScene()
+    {
+        if (sceneName != null) SceneManager.LoadScene(sceneName);
+    }
 }

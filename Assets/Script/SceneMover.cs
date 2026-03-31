@@ -34,6 +34,9 @@ public class SceneMover : MonoBehaviour
         if (player == null)
             player = Camera.main.transform;
 
+        if(bluetoothReceiver == null)
+            bluetoothReceiver = BluetoothReceiver_new.Instance;
+
         // 計算玩家每幀前進方向（單位向量）
         movementDir = new Vector3(offsetX, offsetY, offsetZ).normalized;
 
