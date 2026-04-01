@@ -29,6 +29,10 @@ public class Game1GM : MonoBehaviour
     public GameObject Fork;
     public GameObject Spatula;
     public GameObject TableTennisBat;
+    public GameObject Pan_left;
+    public GameObject Fork_left;
+    public GameObject Spatula_left;
+    public GameObject TableTennisBat_left;
     public GameObject PracticeLight;
     public GameObject State1Light;
     // public GameObject State2Light;
@@ -167,13 +171,17 @@ public class Game1GM : MonoBehaviour
         {
             PingPong.SetActive(true);
             TableTennisBat.SetActive(true);
+            TableTennisBat_left.SetActive(true);
             Pan.SetActive(false);
+            Pan_left.SetActive(false);
             tomato.SetActive(false);
             PracticeLight.SetActive(true);
             State1Light.SetActive(false);
             // State2Light.SetActive(false);
             Fork.SetActive(false);
+            Fork_left.SetActive(false);
             Spatula.SetActive(false);
+            Spatula_left.SetActive(false);
             
             smallRoom.SetActive(true);
             midRoom.SetActive(false);
@@ -182,12 +190,16 @@ public class Game1GM : MonoBehaviour
         else if (game1State == Game1State.State1)
         {
             TableTennisBat.SetActive(false);
+            TableTennisBat_left.SetActive(false);
             Pan.SetActive(true);
+            Pan_left.SetActive(true);
             PracticeLight.SetActive(false);
             State1Light.SetActive(true);
             // State2Light.SetActive(false);
             Fork.SetActive(false);
+            Fork_left.SetActive(false);
             Spatula.SetActive(false);
+            Spatula_left.SetActive(false);
             // pingpongitem狀態交給本身去判斷
             smallRoom.SetActive(false);
             midRoom.SetActive(true);
@@ -196,6 +208,7 @@ public class Game1GM : MonoBehaviour
         else if (game1State == Game1State.State2)
         {
             TableTennisBat.SetActive(false);
+            TableTennisBat_left.SetActive(false);
             PracticeLight.SetActive(false);
             State1Light.SetActive(false);
             // State2Light.SetActive(true);
@@ -210,13 +223,18 @@ public class Game1GM : MonoBehaviour
         else if (game1State == Game1State.End)
         {
             TableTennisBat.SetActive(false);
+            TableTennisBat_left.SetActive(false);
             PracticeLight.SetActive(false);
             State1Light.SetActive(false);
             // State2Light.SetActive(true);
             Fork.SetActive(false);
+            Fork_left.SetActive(false);
             Spatula.SetActive(false);
+            Spatula_left.SetActive(false);
             Pan.SetActive(false);
+            Pan_left.SetActive(false);
             slime.SetActive(false);
+
 
             smallRoom.SetActive(false);
             midRoom.SetActive(false);

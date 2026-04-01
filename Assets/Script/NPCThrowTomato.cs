@@ -18,10 +18,14 @@ public class NPCThrowTomato : MonoBehaviour
     public Game1GM game1GM;
 
     public GameObject Pan;
+    public GameObject Pan_left;
     public GameObject Fork;
+    public GameObject Fork_left;
     public GameObject Spatula;
+    public GameObject Spatula_left;
 
     private GameObject currentTool = null;
+    private GameObject currentTool_left = null;
 
     // ⭐ 動畫事件會呼叫這個（可傳入自訂的丟點）// 其實換工具的邏輯可以改到這邊來
     public void ThrowTomatoByAnimationEvent(Transform customThrowPoint)
@@ -83,26 +87,37 @@ public class NPCThrowTomato : MonoBehaviour
 
     void AniCallChooseNewTool()
     {
-        ChooseNewTool(currentTool);
+        ChooseNewTool(currentTool, currentTool_left);
     }
 
 
-    void ChooseNewTool(GameObject exclude = null)
+    void ChooseNewTool(GameObject exclude = null, GameObject exclude_left = null)
     {
         if(game1GM.game1State != Game1State.State2) return;
         GameObject[] tools = { Pan, Fork, Spatula };
+        GameObject[] tools_left = { Pan_left, Fork_left, Spatula_left };
 
         foreach (var t in tools)
             t.SetActive(false);
+        foreach (var tl in tools_left)
+            tl.SetActive(false);
 
         GameObject chosen;
+        GameObject chosen_left;
         do
         {
             chosen = tools[Random.Range(0, tools.Length)];
         }
         while (chosen == exclude);
+        do
+        {
+            chosen_left = tools_left[Random.Range(0, tools_left.Length)];
+        }
+        while (chosen_left == exclude_left);
 
         if (game1GM.game1State == Game1State.State2) chosen.SetActive(true);
+        if (game1GM.game1State == Game1State.State2) chosen_left.SetActive(true);
         currentTool = chosen;
+        currentTool_left = chosen_left;
     }
 }
