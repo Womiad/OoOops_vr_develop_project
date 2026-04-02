@@ -1,45 +1,54 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
-using System.Collections;
 
 public class Scene2Mover : MonoBehaviour
 {
     [Header("藍牙接收器 (抓 speed 用)")]
     public BluetoothReceiver_new bluetoothReceiver;
 
-    // [Header("GM (看state)")]
-    // public Scene2GM scene2GM;
-
     [Header("玩家/攝影機")]
-    public Transform player; // 玩家或攝影機
+    public Transform player;
 
     [Header("場景方塊設定")]
     public GameObject segmentPrefab;
-    public int initialSegments = 5;  // 玩家前方生成數量
-    public int backSegments = 2;     // 玩家後方生成數量
-    public float offsetX = 10.4f;    // 每段 X 偏移
-    public float offsetY = 0f;    // 每段 y 偏移
-    public float offsetZ = 89.5f;    // 每段 Z 偏移
+    public int initialSegments = 5;
+    public int backSegments = 2;
+    public float offsetX = 10.4f;
+    public float offsetY = 0f;
+    public float offsetZ = 89.5f;
 
     [Header("起始位置設定")]
-    public Vector3 startPosition = new Vector3(-21.4f, 0f, -54.2f); // ✅ 起始點
+    public Vector3 startPosition = new Vector3(-21.4f, 0f, -54.2f);
 
     private Queue<GameObject> segments = new Queue<GameObject>();
     private Vector3 nextSpawnPos;
-    private Vector3 movementDir; // 玩家每幀前進方向
+    private Vector3 movementDir;
 
     [Header("蘑菇生成設定")]
     public GameObject mushroomPrefab;
-    public float spawnMushroomDistance = 300f; // 跑超過這距離後觸發
-    public float mushroomAheadOffset = 50f;    // 蘑菇生成在玩家前方多少距離
+    public float spawnMushroomDistance = 300f;
+    public float mushroomAheadOffset = 50f;
     private bool mushroomSpawned = false;
 
     [Header("玩家動畫設定")]
     public PlayerJump playerJump;
-    private bool mushroomTriggered = false;  // 玩家是否已經觸發動畫
-    private Vector3 mushroomSpawnPos;        // 蘑菇生成位置
+    private bool mushroomTriggered = false;
+    private Vector3 mushroomSpawnPos;
 
+    // ===============================
+    // 🪙 金幣生成設定
+    // ===============================
+    [Header("金幣生成設定")]
+    public GameObject coinPrefab;           // 金幣 Prefab（需掛 Coin.cs）
+    public AudioClip coinSound;             // 吃金幣音效
+    public float coinBaseInterval = 80f;    // 固定間隔距離
+    public float coinRandomInterval = 40f;  // 額外隨機距離 (0 ~ 此值)
+    public int coinMinCount = 3;            // 最少金幣數
+    public int coinMaxCount = 5;            // 最多金幣數
+    public float coinSpacing = 3f;          // 同組金幣之間的間距
+    public float coinHeightOffset = 1.5f;   // 金幣高度偏移（相對玩家）
+
+    private float nextCoinSpawnDistance;    // 下一次生成金幣的累計距離
 
     void Start()
     {
@@ -49,16 +58,18 @@ public class Scene2Mover : MonoBehaviour
         if (player == null)
             player = Camera.main.transform;
 
-        // 計算玩家每幀前進方向（單位向量）
         movementDir = new Vector3(offsetX, offsetY, offsetZ).normalized;
-
-        // 設定初始位置
         nextSpawnPos = startPosition;
 
-        // 取得反方向（用來往後生成）
-        Vector3 backwardDir = -movementDir;
+        // ✅ 重置金幣計數
+        PlayerPrefs.SetInt("CoinCount", 0);
+        PlayerPrefs.Save();
 
-        // ✅ 先往後生成幾段（造景用）
+        // ✅ 設定第一次生成金幣的距離
+        nextCoinSpawnDistance = coinBaseInterval + Random.Range(0f, coinRandomInterval);
+
+        // 往後生成場景
+        Vector3 backwardDir = -movementDir;
         Vector3 backSpawnPos = startPosition;
         for (int i = 0; i < backSegments; i++)
         {
@@ -67,7 +78,7 @@ public class Scene2Mover : MonoBehaviour
             segments.Enqueue(backSeg);
         }
 
-        // ✅ 再往前生成主要行進方向的場景
+        // 往前生成場景
         for (int i = 0; i < initialSegments; i++)
         {
             GameObject seg = Instantiate(segmentPrefab, nextSpawnPos, Quaternion.identity);
@@ -79,19 +90,14 @@ public class Scene2Mover : MonoBehaviour
     void Update()
     {
         if (bluetoothReceiver == null || player == null) return;
-        // if (scene1GM.getScene1State() != Scene1State.Run) return;
 
         float speed = bluetoothReceiver.speed;
-
-        // ✅ 玩家沿著 movementDir 前進
         player.position += movementDir * speed * Time.deltaTime;
 
-        // 取得最後一段
+        // 場景接力生成
         GameObject last = null;
-        foreach (var seg in segments)
-            last = seg;
+        foreach (var seg in segments) last = seg;
 
-        // 當玩家接近最後一段時 → 生成新段
         float distanceToLast = Vector3.Distance(player.position, last.transform.position);
         if (distanceToLast < offsetZ)
         {
@@ -99,7 +105,6 @@ public class Scene2Mover : MonoBehaviour
             segments.Enqueue(newSeg);
             nextSpawnPos += new Vector3(offsetX, offsetY, offsetZ);
 
-            // 保持記憶體乾淨（只清掉最前面的，保留背後造景）
             while (segments.Count > initialSegments + backSegments)
             {
                 GameObject old = segments.Dequeue();
@@ -107,41 +112,61 @@ public class Scene2Mover : MonoBehaviour
             }
         }
 
-        // ===============================
-        // 🟦 蘑菇生成邏輯
-        // ===============================
+        // 蘑菇生成
         if (!mushroomSpawned)
         {
             float traveled = Vector3.Distance(player.position, startPosition);
-
             if (traveled >= spawnMushroomDistance)
             {
-                mushroomSpawnPos =
-                    player.position +
-                    movementDir * mushroomAheadOffset;
-
+                mushroomSpawnPos = player.position + movementDir * mushroomAheadOffset;
                 Instantiate(mushroomPrefab, mushroomSpawnPos, Quaternion.identity);
-
                 mushroomSpawned = true;
-
                 Debug.Log("蘑菇已生成！");
             }
         }
 
-        // ===============================
-        // 🟧 玩家走到蘑菇位置 → 播放動畫
-        // ===============================
         if (mushroomSpawned && !mushroomTriggered)
         {
             float dist = Vector3.Distance(player.position, mushroomSpawnPos);
-
-            if (dist < 5f)   // 距離可調整
+            if (dist < 5f)
             {
                 playerJump.TriggerJumpUp();
-
                 mushroomTriggered = true;
                 Debug.Log("玩家吃到蘑菇動畫觸發！");
             }
         }
+
+        // ===============================
+        // 🪙 金幣生成邏輯
+        // ===============================
+        float traveledTotal = Vector3.Distance(player.position, startPosition);
+        if (coinPrefab != null && traveledTotal >= nextCoinSpawnDistance)
+        {
+            SpawnCoinGroup();
+            nextCoinSpawnDistance = traveledTotal + coinBaseInterval + Random.Range(0f, coinRandomInterval);
+        }
+    }
+
+    void SpawnCoinGroup()
+    {
+        int count = Random.Range(coinMinCount, coinMaxCount + 1);
+        Vector3 basePos = player.position
+                        + movementDir * 40f
+                        + Vector3.up * coinHeightOffset;
+
+        for (int i = 0; i < count; i++)
+        {
+            Vector3 spawnPos = basePos + movementDir * (i * coinSpacing);
+
+            // ✅ 讓金幣面朝玩家前進方向直立
+            Quaternion coinRotation = Quaternion.Euler(-90f, 0f, 135f);
+            GameObject coin = Instantiate(coinPrefab, spawnPos, coinRotation);
+
+            Coin coinScript = coin.GetComponent<Coin>();
+            if (coinScript != null)
+                coinScript.coinSound = coinSound;
+        }
+
+        Debug.Log($"生成了 {count} 個金幣！");
     }
 }

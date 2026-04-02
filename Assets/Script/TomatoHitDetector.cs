@@ -21,6 +21,8 @@ public class TomatoHitDetector : MonoBehaviour
     public GameObject egg;
     public GameObject onigiri;
 
+    public float damageAmount = 300f; // 每次碰撞造成的傷害量
+
     // public GameObject Pan;
     // public GameObject Fork;
     // public GameObject Spatula;
@@ -91,7 +93,7 @@ public class TomatoHitDetector : MonoBehaviour
         if (collision.collider.CompareTag("Pan") || collision.collider.CompareTag("Fork") || collision.collider.CompareTag("Spatula"))
         {
             if (hasScored) return;
-            bossHealthSystem.TakeDamage(300f); // 每次碰撞造成 300 點傷害
+            bossHealthSystem.TakeDamage(damageAmount); // 每次碰撞造成 damageAmount 點傷害
 
             hasScored = true;
 
