@@ -259,7 +259,7 @@ MonoBehaviour:
   scene1GM: {fileID: 1278402999}
   player: {fileID: 1179848559}
   segmentPrefab: {fileID: 922947767}
-  initialSegments: 5
+  initialSegments: 4
   backSegments: 2
   offsetX: 0
   offsetY: 0
@@ -1105,6 +1105,8 @@ GameObject:
   - component: {fileID: 317385252}
   - component: {fileID: 317385251}
   - component: {fileID: 317385250}
+  - component: {fileID: 317385253}
+  - component: {fileID: 317385254}
   m_Layer: 5
   m_Name: Yes
   m_TagString: Untagged
@@ -1226,6 +1228,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 317385248}
   m_CullTransparentMesh: 1
+--- !u!114 &317385253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 317385248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24a311f18e6f8cb4b8c1e0e7381e3c40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onPressed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1234444640}
+        m_TargetAssemblyTypeName: GuildSlimeText, Assembly-CSharp
+        m_MethodName: ButtonYesClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  cooldown: 1
+  leftHandRay: {fileID: 178947982}
+  rightHandRay: {fileID: 1063959105}
+  rayDistance: 20
+  clickButton: 8192
+--- !u!65 &317385254
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 317385248}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 156.03, y: 90.67, z: 10.02}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &331026805
 GameObject:
   m_ObjectHideFlags: 0
@@ -1745,7 +1800,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u8D70\u5427\uFF01"
+  m_text: Let's go!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6250e90943cd9ca47a236530127b376b, type: 2}
   m_sharedMaterial: {fileID: 7196455120220838063, guid: 6250e90943cd9ca47a236530127b376b, type: 2}
@@ -2973,7 +3028,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position: {x: 0, y: 0, z: 0}
-  _size: {x: 800, y: 480, z: 0.01}
+  _size: {x: 1052.6, y: 564.1, z: 0.01}
 --- !u!114 &680772218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4304,6 +4359,8 @@ GameObject:
   - component: {fileID: 962267257}
   - component: {fileID: 962267256}
   - component: {fileID: 962267255}
+  - component: {fileID: 962267258}
+  - component: {fileID: 962267259}
   m_Layer: 5
   m_Name: No
   m_TagString: Untagged
@@ -4425,6 +4482,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 962267253}
   m_CullTransparentMesh: 1
+--- !u!114 &962267258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 962267253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24a311f18e6f8cb4b8c1e0e7381e3c40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onPressed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1234444640}
+        m_TargetAssemblyTypeName: GuildSlimeText, Assembly-CSharp
+        m_MethodName: ButtonNoClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  cooldown: 1
+  leftHandRay: {fileID: 178947982}
+  rightHandRay: {fileID: 1063959105}
+  rayDistance: 10
+  clickButton: 8192
+--- !u!65 &962267259
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 962267253}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 156.03, y: 90.67, z: 10.02}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &964473145
 GameObject:
   m_ObjectHideFlags: 0
@@ -6146,7 +6256,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 2.4, y: 3.78}
-  m_SizeDelta: {x: 800, y: 480}
+  m_SizeDelta: {x: 1052.6, y: 564.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1234444636
 Canvas:
@@ -6278,8 +6388,8 @@ MonoBehaviour:
     text: Looks like you're getting the hang of it!\nWant to go check out some other
       places together?
     audio: {fileID: 8300000, guid: 16e1b3edeee19d24cb4e5b194cb450e4, type: 3}
-  interval: 5
-  askInterval: 30
+  interval: 30
+  askInterval: 0
 --- !u!82 &1234444641
 AudioSource:
   m_ObjectHideFlags: 0
@@ -7986,7 +8096,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u518D\u7DF4\u7FD2\u4E00\u4E0B"
+  m_text: I want to \npractice more...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6250e90943cd9ca47a236530127b376b, type: 2}
   m_sharedMaterial: {fileID: 7196455120220838063, guid: 6250e90943cd9ca47a236530127b376b, type: 2}

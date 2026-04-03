@@ -152,12 +152,14 @@ public class FinalManager : MonoBehaviour
     IEnumerator FinalAniSequence()
     {
         
-        OoOoPsLogo.SetActive(true);
         // 大寶箱開啟動畫
         if (bigChestAnimator != null)
             bigChestAnimator.SetTrigger(bigChestOpenTrigger);
 
         yield return new WaitForSeconds(bigChestOpenDuration + delayBetweenSteps);
+
+        OoOoPsLogo.SetActive(true);
+        yield return new WaitForSeconds(2f);
 
         // FadeOut → 換場景
         if (finalFade != null)

@@ -1,7 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
-using System.Collections;
 
 public class SceneMover : MonoBehaviour
 {
@@ -12,55 +10,59 @@ public class SceneMover : MonoBehaviour
     public Scene1GM scene1GM;
 
     [Header("玩家/攝影機")]
-    public Transform player; // 玩家或攝影機
+    public Transform player;
 
     [Header("場景方塊設定")]
     public GameObject segmentPrefab;
-    public int initialSegments = 5;  // 玩家前方生成數量
-    public int backSegments = 2;     // 玩家後方生成數量
-    public float offsetX = 10.4f;    // 每段 X 偏移
-    public float offsetY = 0f;    // 每段 y 偏移
-    public float offsetZ = 89.5f;    // 每段 Z 偏移
+    public int initialSegments = 5;
+    public int backSegments = 2;
+    public float offsetX = 10.4f;
+    public float offsetY = 0f;
+    public float offsetZ = 89.5f;
 
     [Header("起始位置設定")]
-    public Vector3 startPosition = new Vector3(-21.4f, 0f, -54.2f); // ✅ 起始點
+    public Vector3 startPosition = new Vector3(-21.4f, 0f, -54.2f);
 
-    private Queue<GameObject> segments = new Queue<GameObject>();
-    private Vector3 nextSpawnPos;
-    private Vector3 movementDir; // 玩家每幀前進方向
+    private Queue<GameObject> allSegments = new Queue<GameObject>();
+    private Vector3 nextFrontPos;   // 下一個前方生成位置
+    private Vector3 nextBackPos;    // 下一個後方生成位置（往更後面延伸用）
+    private Vector3 movementDir;
+    private float segmentLength;
 
     void Start()
     {
         if (player == null)
             player = Camera.main.transform;
 
-        if(bluetoothReceiver == null)
+        if (bluetoothReceiver == null)
             bluetoothReceiver = BluetoothReceiver_new.Instance;
 
-        // 計算玩家每幀前進方向（單位向量）
         movementDir = new Vector3(offsetX, offsetY, offsetZ).normalized;
+        segmentLength = new Vector3(offsetX, offsetY, offsetZ).magnitude;
 
-        // 設定初始位置
-        nextSpawnPos = startPosition;
-
-        // 取得反方向（用來往後生成）
-        Vector3 backwardDir = -movementDir;
-
-        // ✅ 先往後生成幾段（造景用）
+        // 先生成後方塊（enqueue 順序：最遠後方 → 起點 → 前方）
         Vector3 backSpawnPos = startPosition;
+        Vector3[] backPositions = new Vector3[backSegments];
         for (int i = 0; i < backSegments; i++)
         {
-            backSpawnPos += backwardDir * new Vector3(offsetX, offsetY, offsetZ).magnitude;
-            GameObject backSeg = Instantiate(segmentPrefab, backSpawnPos, Quaternion.identity);
-            segments.Enqueue(backSeg);
+            backSpawnPos -= movementDir * segmentLength;
+            backPositions[backSegments - 1 - i] = backSpawnPos; // 反轉順序讓最遠的先入列
+        }
+        nextBackPos = backSpawnPos - movementDir * segmentLength; // 再往後一格備用
+
+        foreach (var pos in backPositions)
+        {
+            GameObject seg = Instantiate(segmentPrefab, pos, Quaternion.identity);
+            allSegments.Enqueue(seg);
         }
 
-        // ✅ 再往前生成主要行進方向的場景
+        // 再生成前方塊
+        nextFrontPos = startPosition;
         for (int i = 0; i < initialSegments; i++)
         {
-            GameObject seg = Instantiate(segmentPrefab, nextSpawnPos, Quaternion.identity);
-            segments.Enqueue(seg);
-            nextSpawnPos += new Vector3(offsetX, offsetY, offsetZ);
+            GameObject seg = Instantiate(segmentPrefab, nextFrontPos, Quaternion.identity);
+            allSegments.Enqueue(seg);
+            nextFrontPos += movementDir * segmentLength;
         }
     }
 
@@ -70,30 +72,25 @@ public class SceneMover : MonoBehaviour
         if (scene1GM.getScene1State() != Scene1State.Run) return;
 
         float speed = bluetoothReceiver.speed;
-
-        // ✅ 玩家沿著 movementDir 前進
         player.position += movementDir * speed * Time.deltaTime;
 
-        // 取得最後一段
+        // ✅ 前方：接近最後一塊時往前補
         GameObject last = null;
-        foreach (var seg in segments)
-            last = seg;
+        foreach (var seg in allSegments) last = seg;
 
-        // 當玩家接近最後一段時 → 生成新段
-        float distanceToLast = Vector3.Distance(player.position, last.transform.position);
-        if (distanceToLast < offsetZ)
+        if (Vector3.Distance(player.position, last.transform.position) < offsetZ)
         {
-            GameObject newSeg = Instantiate(segmentPrefab, nextSpawnPos, Quaternion.identity);
-            segments.Enqueue(newSeg);
-            nextSpawnPos += new Vector3(offsetX, offsetY, offsetZ);
+            // 前方補一塊
+            GameObject newFront = Instantiate(segmentPrefab, nextFrontPos, Quaternion.identity);
+            allSegments.Enqueue(newFront);
+            nextFrontPos += movementDir * segmentLength;
+        }
 
-            // 保持記憶體乾淨（只清掉最前面的，保留背後造景）
-            while (segments.Count > initialSegments + backSegments)
-            {
-                GameObject old = segments.Dequeue();
-                Destroy(old);
-            }
+        // ✅ 後方：超過 backSegments 塊就刪（與前方補塊脫鉤）
+        while (allSegments.Count > initialSegments + backSegments)
+        {
+            GameObject old = allSegments.Dequeue();
+            Destroy(old);
         }
     }
-    
 }
