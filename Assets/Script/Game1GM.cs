@@ -107,11 +107,21 @@ public class Game1GM : MonoBehaviour
             ChangeState(Game1State.End);
     }
 
+    float timer = 0f;
+    public float interval = 1f / 60f; // 60 FPS
+
     void Update()
     {
-        if(bluetoothReceiver.speed > 0)
+        timer += Time.deltaTime;
+
+        if (timer >= interval)
         {
-            energy += (int)(bluetoothReceiver.speed);
+            timer -= interval;
+
+            if (bluetoothReceiver.speed > 0)
+            {
+                energy += (int)(bluetoothReceiver.speed);
+            }
         }
         // if(Input.GetKey(KeyCode.DownArrow))
         // {
@@ -135,36 +145,6 @@ public class Game1GM : MonoBehaviour
             TriggerSmokeEffect();
         }
         screenText.text = bluetoothReceiver.outputText;
-
-        // ★ 檢查是否該切換到 State1
-        // if (game1State == Game1State.Practice)
-        // {
-        //     float elapsed = Time.time - startTime;
-
-        //     if (elapsed >= 40f)
-        //     {
-        //         ChangeState(Game1State.State1);
-        //     }
-        // }else if (game1State == Game1State.State1)
-        // {
-        //     float elapsed = Time.time - startTime;
-
-    
-        //     if (elapsed >= 90f)
-        //     {
-        //         ChangeState(Game1State.State2);
-        //     }
-        // }else if (game1State == Game1State.State2)
-        // {
-        //     float elapsed = Time.time - startTime;
-
-    
-        //     if (elapsed >= 140f)
-        //     {
-        //         ChangeState(Game1State.End);
-        //         game1Fade.FadeAndToBeContinued();
-        //     }
-        // }
 
         // 狀態控制
         if (game1State == Game1State.Practice)

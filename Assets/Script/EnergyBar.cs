@@ -13,45 +13,58 @@ public class EnergyBar : MonoBehaviour
     // 音效
     public AudioSource energyIncreaseSound;
 
-    private float lastValue; // 用來追蹤前一幀的能量值
+    private float lastValue;
 
     [Header("Pitch 設定")]
-    public float minPitch = 1f; // 最低音調
-    public float maxPitch = 2f; // 最高音調
+    public float minPitch = 1f;
+    public float maxPitch = 2f;
+
+    // ⭐ 新增：音效延遲停止時間
+    private float soundTimer = 0f;
+    public float soundHoldTime = 0.1f; // 0.1秒內沒增加才停止
 
     void Start()
     {
         lastValue = (float)game1GM.energy / game1GM.maxEnergy;
+
         if (energyIncreaseSound != null)
-            energyIncreaseSound.loop = true; // 循環播放
+            energyIncreaseSound.loop = true;
     }
 
     void Update()
     {
         value = (float)game1GM.energy / game1GM.maxEnergy;
-        if (value > 1f) value = 1f;
+        value = Mathf.Clamp01(value);
+
         fillImage.fillAmount = value;
 
-        // 比較能量是否升高
+        // ⭐ 如果有增加 → 重置計時器
         if (value > lastValue)
         {
+            soundTimer = soundHoldTime;
+
             if (!energyIncreaseSound.isPlaying)
             {
                 energyIncreaseSound.Play();
             }
+        }
 
-            // 根據能量更新 pitch
+        // ⭐ 計時器遞減
+        soundTimer -= Time.deltaTime;
+
+        // ⭐ 更新 pitch（只要在播放就更新）
+        if (energyIncreaseSound.isPlaying)
+        {
             float targetPitch = Mathf.Lerp(minPitch, maxPitch, value);
             energyIncreaseSound.pitch = targetPitch;
         }
-        else
+
+        // ⭐ 超過時間才停止（避免抖動）
+        if (soundTimer <= 0f && energyIncreaseSound.isPlaying)
         {
-            if (energyIncreaseSound.isPlaying)
-            {
-                energyIncreaseSound.Stop();
-            }
+            energyIncreaseSound.Stop();
         }
 
-        lastValue = value; // 更新前一幀的能量值
+        lastValue = value;
     }
 }

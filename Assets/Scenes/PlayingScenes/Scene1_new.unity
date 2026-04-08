@@ -6438,7 +6438,7 @@ MonoBehaviour:
       places together?
     audio: {fileID: 8300000, guid: 16e1b3edeee19d24cb4e5b194cb450e4, type: 3}
   interval: 5
-  askInterval: 30
+  askInterval: 10
 --- !u!82 &1234444641
 AudioSource:
   m_ObjectHideFlags: 0

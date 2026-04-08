@@ -600,7 +600,7 @@ public class BluetoothReceiver_new : MonoBehaviour
                 }
 
                 // 第一次收到資料，切換到 WaitingData -> Connected
-                if (currentState == BTState.Connecting && latestMessage.Contains("ConnectionSuccess"))
+                if (currentState == BTState.Connecting && latestMessage.Contains("Weight:"))
                 {
                     TransitionToState(BTState.WaitingData);
                 }
@@ -747,7 +747,7 @@ public class BluetoothReceiver_new : MonoBehaviour
         {
             line = line.Trim();
 
-            if (line.StartsWith("ConnectionSuccess, Weight:"))
+            if (line.StartsWith("ConnectionSuccess, Weight:") || line.StartsWith("Weight:"))
             {
                 string value = line.Split(':')[1];
                 float weight = float.Parse(value, CultureInfo.InvariantCulture);
