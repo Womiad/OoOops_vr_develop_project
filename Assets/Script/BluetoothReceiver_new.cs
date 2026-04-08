@@ -122,7 +122,7 @@ public class BluetoothReceiver_new : MonoBehaviour
         Debug.Log($"🔄 State: {previousState} → {currentState}");
     }
 
-    private void OnStateEnter(BTState state)
+    public void OnStateEnter(BTState state)
     {
         switch (state)
         {
